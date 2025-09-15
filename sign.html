@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plant Vibes — Animated Sign Up</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* (same styles as your login page, kept for theme consistency) */
+    :root{
+      --bg1:#0b2c22; --bg2:#0f3a2a; --bg3:#0b2b2a;
+      --mint:#c8f5d2; --leaf:#42b883; --leaf-dark:#2a8f69;
+      --lime:#9be15d; --accent:#a5ffb5; --card:rgba(255,255,255,0.08);
+      --card-border:rgba(255,255,255,0.15); --text:#e8ffee;
+      --muted:#cfe8d9; --danger:#ff6b6b; --shadow:rgba(0,0,0,0.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 80% 10%, var(--bg2), transparent),
+                  radial-gradient(800px 800px at 10% 90%, #08311f, transparent),
+                  linear-gradient(160deg, var(--bg1), var(--bg3));
+      overflow:hidden;
+    }
+    .grain{position:fixed; inset:0; pointer-events:none; mix-blend-mode:overlay; opacity:.08; background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.5"/></svg>');}
+    .spores{position:fixed; inset:0; overflow:hidden; pointer-events:none}
+    .spores span{position:absolute;width:6px;height:6px;border-radius:50%;background: radial-gradient(circle at 30% 30%, var(--accent), transparent 60%);filter: blur(.3px);opacity:.7;animation: floatUp linear infinite;}
+    @keyframes floatUp{from{transform: translateY(0) translateX(var(--drift));opacity:.6;}to{transform: translateY(-120vh) translateX(calc(var(--drift)*-1));opacity:0;}}
+    .scene{position:fixed; inset:0; overflow:hidden;}
+    .vine{position:absolute; left:50%; transform:translateX(-50%); bottom:-30px; width:1200px; max-width:110vw; opacity:.95;}
+    .leaf{transform-origin: bottom center; animation: sway 6s ease-in-out infinite;}
+    .leaf.delay1{animation-delay:.8s}.leaf.delay2{animation-delay:1.6s}.leaf.delay3{animation-delay:2.2s}
+    @keyframes sway{0%,100%{transform: rotate(0deg)}50%{transform: rotate(3.5deg)}}
+    .grow path.stem{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 5s ease forwards 0.6s;}
+    @keyframes draw{to{stroke-dashoffset:0}}
+    .wrap{position:relative; min-height:100%; display:grid; place-items:center; padding:32px}
+    .card{position:relative;width:min(92vw,420px);background:linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.05));border:1px solid var(--card-border);border-radius:24px;box-shadow:0 20px 40px var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.04);backdrop-filter: blur(8px) saturate(120%);padding:28px 26px 26px;z-index:2;}
+    .badge{position:absolute;top:-14px;right:16px;background:rgba(155,225,93,.2);color:#d6ffd6;border:1px solid rgba(165,255,181,.35);padding:6px 10px;border-radius:14px;font-size:12px;letter-spacing:.2px;backdrop-filter: blur(4px);}
+    h1{margin:6px 0 2px;font-weight:600;letter-spacing:.3px;}
+    .subtitle{margin:0 0 16px;color:var(--muted);font-size:14px}
+    form{display:grid;gap:14px;margin-top:10px}
+    .field{display:grid;gap:8px}
+    label{font-size:13px;color:var(--muted)}
+    .input{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.14);border-radius:14px;padding:12px 14px;outline:none;transition:.25s border,.25s box-shadow,.25s transform;}
+    .input:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px rgba(165,255,181,0.15);transform:translateY(-1px);}
+    .input input{flex:1;background:transparent;border:0;color:var(--text);font-size:15px;outline:none;}
+    .btn{display:inline-grid;place-items:center;width:100%;padding:12px 16px;border-radius:14px;border:0;cursor:pointer;font-weight:600;letter-spacing:.3px;transition:transform .12s ease, box-shadow .2s ease;color:#0b2c22;background:linear-gradient(180deg, var(--lime), var(--accent));box-shadow:0 10px 24px rgba(155,225,93,.25);}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 16px 28px rgba(165,255,181,.3);}
+    .btn:active{transform:translateY(0) scale(.99)}
+    .legal{font-size:11px;color:var(--muted);margin-top:12px;text-align:center}
+    .footnote{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--muted);opacity:.9;z-index:2}
+    @keyframes shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
+    .shake{animation:shake .5s}
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="spores" aria-hidden="true">
+    <!-- floating particles reused -->
+    <span style="left:5%;  bottom:-10vh; --drift:20px; animation-duration:18s"></span>
+    <span style="left:20%; bottom:-20vh; --drift:-15px; animation-duration:22s"></span>
+    <span style="left:40%; bottom:-30vh; --drift:25px; animation-duration:20s"></span>
+    <span style="left:60%; bottom:-25vh; --drift:-20px; animation-duration:24s"></span>
+    <span style="left:80%; bottom:-15vh; --drift:15px; animation-duration:19s"></span>
+  </div>
+
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="title">
+      <div class="badge">🌱 Plant Vibes</div>
+      <h1 id="title">Create Account</h1>
+      <p class="subtitle">Join us and let your ideas grow.</p>
+      <form id="signupForm" novalidate>
+        <div class="field">
+          <label for="fullname">Full Name</label>
+          <div class="input"><input id="fullname" name="fullname" type="text" placeholder="Green Spirit" required></div>
+        </div>
+        <div class="field">
+          <label for="username">Username</label>
+          <div class="input"><input id="username" name="username" type="text" placeholder="plantlover" required></div>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <div class="input"><input id="email" name="email" type="email" placeholder="you@greenmail.com" required></div>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input"><input id="password" name="password" type="password" placeholder="••••••••" required></div>
+        </div>
+        <div class="field">
+          <label for="confirm">Confirm Password</label>
+          <div class="input"><input id="confirm" name="confirm" type="password" placeholder="••••••••" required></div>
+        </div>
+        <button class="btn" type="submit">Sign Up</button>
+        <p class="legal">By signing up, you agree to our <a href="#">Terms</a> & <a href="#">Privacy</a>.</p>
+      </form>
+    </main>
+  </div>
+
+  <!-- Decorative plant scene same as login -->
+  <div class="scene" aria-hidden="true">
+    <!-- (reuse the SVG vines and leaves from login for animation) -->
+    <svg class="vine grow" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 300 C 150 260, 300 240, 450 260 S 750 300, 1200 260 L1200 300 Z" fill="#0a241d"/>
+      <path class="stem" d="M1000 300 C 920 270, 870 240, 820 210 C 760 170, 740 130, 720 90 C 690 30, 650 10, 600 20 C 560 28, 540 60, 530 98 C 520 135, 500 160, 470 185 C 420 225, 360 240, 300 230 C 220 215, 180 175, 160 120" stroke="url(#g)" stroke-width="6"/>
+      <g class="leaf" transform="translate(780,200)"><path d="M0 0 C 30 -10, 60 10, 70 40 C 40 38, 15 20, 0 0 Z" fill="url(#leafGrad)"/><path d="M0 0 C -30 -10, -58 8, -66 36 C -38 34, -14 18, 0 0 Z" fill="url(#leafGradDark)"/></g>
+      <g class="leaf delay1" transform="translate(640,120) rotate(-8)"><path d="M0 0 C 24 -10, 50 8, 56 34 C 32 32, 12 18, 0 0 Z" fill="url(#leafGrad)"/><path d="M0 0 C -26 -10, -48 8, -54 30 C -30 28, -10 16, 0 0 Z" fill="url(#leafGradDark)"/></g>
+      <g class="leaf delay2" transform="translate(520,160) rotate(6)"><path d="M0 0 C 28 -12, 56 10, 64 36 C 38 34, 14 18, 0 0 Z" fill="url(#leafGrad)"/><path d="M0 0 C -28 -12, -54 10, -60 34 C -34 32, -12 16, 0 0 Z" fill="url(#leafGradDark)"/></g>
+      <g class="leaf delay3" transform="translate(420,210) rotate(-10)"><path d="M0 0 C 28 -10, 56 10, 64 36 C 38 34, 14 18, 0 0 Z" fill="url(#leafGrad)"/><path d="M0 0 C -28 -10, -54 10, -60 34 C -34 32, -12 16, 0 0 Z" fill="url(#leafGradDark)"/></g>
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--leaf)"/><stop offset="100%" stop-color="var(--leaf-dark)"/></linearGradient>
+        <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="var(--leaf)"/></linearGradient>
+        <linearGradient id="leafGradDark" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7bd0a1"/><stop offset="100%" stop-color="var(--leaf-dark)"/></linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="footnote">Made with 🌿 + CSS animations</div>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pwd = document.getElementById('password');
+      const confirm = document.getElementById('confirm');
+      if(pwd.value !== confirm.value){
+        alert('Passwords do not match!');
+        confirm.closest('.input').classList.add('shake');
+        setTimeout(()=>confirm.closest('.input').classList.remove('shake'),600);
+        return;
+      }
+      alert('Account created successfully! (demo)');
+    });
+  </script>
+</body>
+</html>

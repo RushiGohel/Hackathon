@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Discover authentic tribal art from indigenous artisans. Handmade, fair trade, and woven with stories of resilience." />
+  <title>TribalArt — Empowering Indigenous Artisans</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="2RUSHII.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"> 
+        <span class="brand-mark">◉</span>
+        <span class="brand-name">Tribal Tales</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="artisans.html">Artisans</a>
+        <a href="map.html">Map</a>
+        <a href="impact.html">Impact</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <div class="controls">
+        <a href="login.html" class="btn outline small">Log In</a>
+        <button id="cartBtn" class="cart-btn" aria-label="Open cart">
+          <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <span class="badge">Every craft tells a story</span>
+          <h1 class="hero-title">Discover authentic <span class="accent">Tribal Art</span></h1>
+          <p class="lead">A curated marketplace celebrating indigenous artisans, especially women weaving stories of resilience and tradition. Support communities with every unique piece.</p>
+          <div class="hero-ctas">
+            <button class="btn primary" id="shopNow">Shop Collection</button>
+            <a href="story.html" class="btn outline">Our Story</a>
+            <a href="map.html" class="btn outline">🗺 Explore Map</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-stack">
+            <img src="hero1.jpg" alt="Weaver at loom" loading="lazy" />
+            <img src="mask.jpg" alt="Traditional tribal mask" loading="lazy"/>
+            <img src="girl.jpg" alt="Handwoven tribal basket" loading="lazy"/>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="container products-section">
+      <div class="section-head">
+        <h2>Explore Our Collection</h2>
+        <a href="shop.html" class="btn primary">View All Products</a>
+      </div>
+      <div id="productsGrid" class="products-grid"></div>
+    </section>
+
+  </main>
+
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Your Cart</h3>
+      <button id="closeCart" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: ₹<span id="cartTotal">0.00</span></div>
+      <button id="checkout" class="btn primary">Checkout</button>
+      <button id="clearCart" class="btn outline">Clear</button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" aria-live="polite" role="status"></div>
+  <script src="11.js" defer></script>
+</body>
+</html>

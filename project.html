@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GreenPlay — Prototype</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1020; --card:#10162f; --muted:#9fb4ff; --accent:#37d97f; --danger:#ff6b6b; --glass: rgba(255,255,255,0.06);
+      --maxwidth:1200px;
+      --radius:16px;
+      --shadow:0 12px 32px rgba(0,0,0,0.45);
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box; margin:0; padding:0}
+    html,body{height:100%}
+    body{min-height:100vh;background:linear-gradient(180deg,#0b2c22 0%, #0f3a2a 50%, #0b2b2a 100%);color:#eaf2ff;line-height:1.5}
+    .wrap{max-width:var(--maxwidth);margin:0 auto;padding:28px 18px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 0}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#22c1c3,#fdbb2d);box-shadow:var(--shadow)}
+    h1{font-size:24px;font-weight:700;color:#fff;margin:0}
+    nav{display:flex;gap:14px;flex-wrap:wrap}
+    nav a{color:var(--muted);text-decoration:none;padding:10px 16px;border-radius:12px;transition:all 0.25s}
+    nav a:hover{background:var(--glass);color:#fff;transform:translateY(-2px)}
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 440px;gap:28px;margin-top:28px;align-items:center}
+    @media (max-width:980px){.hero{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));border-radius:var(--radius);padding:22px;border:1px solid rgba(255,255,255,0.08);box-shadow:var(--shadow);backdrop-filter: blur(6px)}
+    .hero-left h2{font-size:32px;font-weight:700;margin:0 0 12px;line-height:1.3}
+    .tagline{color:#d4e4ff;margin-bottom:16px;font-size:15px}
+    .cta{display:flex;gap:14px;margin-top:12px}
+    .btn{background:var(--accent);border:none;padding:12px 20px;border-radius:14px;color:#022018;font-weight:700;cursor:pointer;transition:all 0.25s;font-size:15px}
+    .btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 6px 16px rgba(0,0,0,0.4)}
+    .btn.ghost{background:transparent;border:0.5px solid rgba(255,255,255,0.15);color:var(--muted)}
+    .btn.ghost:hover{border-color:var(--accent);color:#09220c}
+    /* rotating earth */
+    .earth-wrap{display:flex;align-items:center;justify-content:center}
+    .earth{width:400px;height:260px;border-radius:16px;background:linear-gradient(135deg,#0fbf63,#1ec8ff);position:relative;overflow:hidden;box-shadow:var(--shadow)}
+    .earth:before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 30% 20%, rgba(255,255,255,0.06), transparent 12%), linear-gradient(180deg, rgba(255,255,255,0.05), transparent);mix-blend-mode:overlay}
+    .globe{width:150px;height:150px;border-radius:50%;background:conic-gradient(from 200deg at 50% 50%, #2b7fff 0 40%, #28d97f 40% 70%, #74d7ff 70% 100%);position:absolute;left:20px;top:20px;box-shadow:0 8px 30px #0008;animation:spin 18s linear infinite}
+    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    .sprout{position:absolute;right:24px;bottom:18px;font-size:72px;opacity:0.95;animation:bounce 3s ease-in-out infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    /* main grid */
+    .grid{display:grid;grid-template-columns:1fr 420px;gap:24px;margin-top:28px}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+    /* panels */
+    .panel-list{display:grid;gap:14px}
+    .panel{display:flex;align-items:flex-start;gap:14px;padding:14px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);transition:all 0.25s}
+    .panel:hover{transform:translateY(-3px);background:rgba(255,255,255,0.06)}
+    .panel .icon{width:68px;height:68px;border-radius:14px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:30px}
+    .panel h3{margin:0;font-size:18px;font-weight:600;color:#fff}
+    .panel p{margin:6px 0 0;color:#a9c1ff;font-size:14px}
+    /* mini nav */
+    .mini-nav{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+    .mini-nav button{background:transparent;border:1px solid rgba(255,255,255,0.12);padding:8px 14px;border-radius:12px;color:var(--muted);cursor:pointer;transition:all 0.25s;font-size:14px}
+    .mini-nav button:hover{background:var(--accent);color:#022018;border-color:var(--accent)}
+    /* dashboard cards */
+    .stats{display:flex;gap:14px;margin-top:16px;flex-wrap:wrap}
+    .stat{flex:1;min-width:120px;padding:14px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));text-align:center;box-shadow:inset 0 0 6px rgba(255,255,255,0.04)}
+    .stat .value{font-weight:800;font-size:24px;margin-bottom:4px;color:#fff}
+    .stat .label{color:#9fb4ff;font-size:13px}
+    /* right column */
+    aside{display:flex;flex-direction:column;gap:14px}
+    aside .card{padding:16px}
+    /* footer */
+    footer{margin-top:36px;text-align:center;color:#9fb4ff;font-size:13px;padding:16px 0;border-top:1px solid rgba(255,255,255,0.05)}
+    /* animations */
+    .fade-in{animation:fadeUp .7s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+    /* small responsive */
+    @media (max-width:520px){ .earth{width:260px;height:160px} .globe{width:110px;height:110px;left:12px;top:12px} .sprout{font-size:48px} .logo{width:48px;height:48px} h1{font-size:18px} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>GreenPlay</h1>
+          <div style="color:#9fb4ff;font-size:13px">Learn. Play. Save the Planet.</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="student.html"><button class="btn ghost"style="button-background:#1ec8ff">Profile</button></a>
+       <a href="blog.html"><button class="btn ghost"style="button-background:#1ec8ff">Blogs</button></a>
+       
+        <a href="login.html"><button class="btn ghost"style="button-background:#1ec8ff">login</button></a>
+
+       <a href="sign.html"><button class="btn ghost"style="button-background:#1ec8ff">Signup</button></a>
+      </nav>
+    </header>
+
+    <section class="hero">  
+      <div class="hero-left card fade-in">
+        <h2>Gamified Environmental Education for Schools & Colleges</h2>
+        <p class="tagline">Interactive games, quizzes, and a virtual eco-city that teaches sustainability through play.</p>
+
+        <div class="cta">
+          <button class="btn" onclick="scrollToSection('games')">Try Demo</button>
+          <button class="btn ghost" onclick="scrollToSection('eco-city')">Eco City Preview</button>
+        </div>
+
+        <div class="mini-nav" style="margin-top:16px">
+          <button onclick="scrollToSection('games')">Play Game</button>
+          <button onclick="scrollToSection('eco-city')">Eco City</button>
+          <button onclick="scrollToSection('leaderboard')">Leaderboard</button>
+        </div>
+
+        <div class="stats" style="margin-top:18px">
+          <div class="stat">
+            <div class="value">3</div>
+            <div class="label">Mini-Games</div>
+          </div>
+          <div class="stat">
+            <div class="value">120+</div>
+            <div class="label">Lessons & Quizzes</div>
+          </div>
+          <div class="stat">
+            <div class="value">School-Ready</div>
+            <div class="label">Teacher Tools</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="earth-wrap">
+        <div class="earth card fade-in" aria-hidden="true">
+          <div class="globe" id="globe"></div>
+          <div class="sprout"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <div>
+        <section id="games" class="card panel-list fade-in">
+          <div class="panel">
+            <div class="icon"></div>
+            <div>
+              <h3>Climate Time Traveler</h3>
+              <p>Make choices, jump to the future, and see the consequences visually — perfect for classroom demos.</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="icon"></div>
+            <div>
+              <h3>Recycling Sorter</h3>
+               <a href="viraj.html"><button class="btn" style="background:#1ec8ff">Play Now</button></a>
+
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="icon"></div>
+            <div>
+              <h3>Water Saver Puzzle</h3>
+              <a href="2ND.HTML"><button class="btn" style="background:#1ec8ff">Play Now</button></a>
+
+            </div>
+          </div>
+        </section>
+
+        <section id="eco-city" class="card fade-in" style="margin-top:16px">
+          <h3>Eco-City Builder (Preview)</h3>
+          <p style="color:#9fb4ff">Spend points to add trees, parks, and solar panels. Animated growth when unlocked.</p>
+          <div style="height:220px;background:linear-gradient(180deg,#062233,#03202a);border-radius:12px;margin-top:12px;display:flex;align-items:center;justify-content:center;color:#9fb4ff">
+            <div>Interactive canvas / demo (Game page will be integrated here)</div>
+          </div>
+        </section>
+
+        <section id="how" class="card fade-in" style="margin-top:16px">
+          <h3>How it Works</h3>
+          <p style="color:#cfe8ff;margin-top:8px">Students play short games and quizzes. Good choices earn Green Score used to build a virtual eco-city. Teachers can assign tasks and monitor progress.</p>
+        </section>
+      </div>
+
+      <aside>
+        <section id="leaderboard" class="card fade-in">
+          <h3>Leaderboard (Class)</h3>
+          <ol style="margin:8px 0 0 18px;color:#cfe8ff">
+            <li>Rushi — 820 pts</li>
+            <li>Het — 740 pts</li>
+            <li>Dhyani — 680 pts</li>
+          </ol>
+        </section>
+
+        <section id="teachers" class="card fade-in">
+          <h3>Teacher Tools</h3>
+          <p style="color:#9fb4ff;margin-top:8px">Assign challenges, monitor class progress, and download reports.</p>
+          <div style="display:flex;gap:10px;margin-top:12px">
+            <a href="teacher.html"><button class="btn"style="button-background:#0fbf63">Teacher-dashboard</a></button>
+             <a href="challange.html"><button class="btn"style="button-background:#0fbf63">Create Challange</a></button>
+          </div>
+        </section>
+
+        <section id="About us" class="card fade-in">
+          <h3>About us</h3>
+          <p style="color:#9fb4ff;margin-top:8px">1234@gmail</p>
+          <p style="color:#9fb4ff">+91 9313184501</p>
+        </section>
+      </aside>
+    </div>
+
+    <footer>
+      <div style="color:#9fb4ff">© GreenPlay — Prototype for Smart India Hackathon</div>
+    </footer>
+  </div>
+
+  <script>
+    // Smooth scroll helper
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+
+    // simple globe color animation (runs only if element exists)
+    (function animateGlobe(){
+      const globe = document.getElementById('globe');
+      if(!globe) return;
+      let hue = 200;
+      setInterval(()=>{
+        hue = (hue + 0.35) % 360;
+        globe.style.background = `conic-gradient(from 200deg at 50% 50%, hsl(${hue} 80% 55%) 0 40%, #28d97f 40% 70%, #74d7ff 70% 100%)`;
+      }, 40);
+    })();
+  </script>
+</body>
+</html>

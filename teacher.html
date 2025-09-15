@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard - Plant Vibes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0fdf4;
+      --card: #ffffff;
+      --accent: #22c55e;
+      --dark: #064e3b;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--dark);
+    }
+    header {
+      background: var(--accent);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .container {
+      padding: 2rem;
+      display: grid;
+      gap: 2rem;
+    }
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-family: inherit;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #16a34a;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.7rem;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background: var(--accent);
+      color: white;
+    }
+    .actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      padding: 0.5rem;
+      background: #e6f9ec;
+      margin-top: 0.5rem;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1> Teacher Dashboard</h1>
+    <button onclick="logout()">Logout</button>
+  </header>
+
+  <div class="container">
+    <!-- Eco Tips Broadcaster -->
+    <div class="card">
+      <h2>Eco news</h2>
+      <form id="tipForm">
+        <label for="tip">Share news about Environment</label>
+        <textarea id="tip" rows="3" placeholder="e.g., Switch off lights when not in use" required></textarea>
+        <button type="submit">Post Tip</button>
+      </form>
+      <h3>Posted News</h3>
+      <ul id="tipList"></ul>
+    </div>
+
+    <!-- Monitor Student Scores -->
+    <div class="card">
+      <h2>Student Scores</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Score</th>
+            <th>Progress</th>
+          </tr>
+        </thead>
+        <tbody id="scoreTable">
+          <tr><td>Aarav</td><td>120</td><td></td></tr>
+          <tr><td>Ananya</td><td>95</td><td></td></tr>
+          <tr><td>Rohan</td><td>150</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Download Reports -->
+    <div class="card">
+      <h2>Download Reports</h2>
+      <div class="actions">
+        <button onclick="downloadExcel()">⬇️ Download Excel</button>
+        <button onclick="downloadPDF()">⬇️ Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Eco Tips Broadcaster
+    const form = document.getElementById('tipForm');
+    const tipList = document.getElementById('tipList');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const tip = document.getElementById('tip').value;
+      const li = document.createElement('li');
+      li.textContent = "" + tip;
+      tipList.appendChild(li);
+      form.reset();
+    });
+
+    // Dummy Excel Download
+    function downloadExcel() {
+      alert("Excel report generated! (Demo)");
+    }
+
+    // Dummy PDF Download
+    function downloadPDF() {
+      alert("PDF report generated! (Demo)");
+    }
+
+    // Logout
+    function logout() {
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

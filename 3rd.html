@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Climate Time Traveller — Web Edition</title>
+  <style>
+    :root{--bg:#1c2e3c;--panel:#f6f6f6;--accent:#3c9;--danger:#e04}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,Helvetica,sans-serif;background:var(--bg);color:#fff}
+    #gameWrap{display:flex;flex-direction:row;gap:16px;align-items:flex-start;padding:18px}
+    canvas{background:#8fbbe6;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.4);outline:none}
+    .sidebar{width:300px}
+    .card{background:#0f1a26;padding:12px;border-radius:8px;margin-bottom:12px}
+    h1{font-size:20px;margin:0 0 8px}
+    .muted{opacity:.8;font-size:13px}
+    button{display:inline-block;padding:8px 12px;border-radius:6px;border:0;background:#2b6db0;color:#fff;cursor:pointer}
+    .big{font-size:16px}
+    .hidden{display:none}
+    .modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6)}
+    .modalBox{width:640px;background:var(--panel);color:#111;border-radius:10px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+    .choices{margin-top:12px}
+    .choice{padding:10px;border-radius:6px;margin-bottom:8px;background:#eee;cursor:pointer}
+    .choice.sel{outline:3px solid #4a9}
+    .hudLine{display:flex;justify-content:space-between;margin-top:6px}
+    .center{display:flex;align-items:center;justify-content:center}
+    @media (max-width:980px){#gameWrap{flex-direction:column;align-items:center}.sidebar{width:100%}}
+  </style>
+</head>
+<body>
+  <div id="gameWrap">
+    <canvas id="c" width="900" height="600" tabindex="0"></canvas>
+    <div class="sidebar">
+      <div class="card">
+        <h1>Climate Time Traveller</h1>
+        <div class="muted">Collect good eco-actions, avoid pollutants, and answer quizzes to repair the timeline.</div>
+        <div class="hudLine"><div>Score</div><div id="score">0</div></div>
+        <div class="hudLine"><div>Lives</div><div id="lives">3</div></div>
+        <div class="hudLine"><div>Level</div><div id="levelName">-</div></div>
+        <div class="hudLine"><div>Time</div><div id="timeLeft">0s</div></div>
+        <div class="hudLine"><div>High Score</div><div id="high">0</div></div>
+      </div>
+      <div class="card">
+        <div class="muted">Controls</div>
+        <div class="muted">Move: Arrow keys / WASD</div>
+        <div class="muted">Submit: Enter / Space</div>
+        <div class="muted">Pause: P</div>
+        <div style="margin-top:10px"><button id="startBtn" class="big">Start Game</button> <button id="menuHow">How to Play</button></div>
+      </div>
+      <div class="card">
+        <div class="muted">Credits</div>
+        <div style="margin-top:8px;font-size:13px">Converted from a Pygame prototype into a single-file HTML/JS game. LocalStorage used for High Score.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz modal -->
+  <div id="quizModal" class="modal hidden">
+    <div class="modalBox">
+      <h2>Time Repair Quiz</h2>
+      <p id="quizQ">Question text</p>
+      <div id="quizChoices" class="choices"></div>
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end">
+        <button id="quizSubmit">Submit</button>
+        <button id="quizCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Simple intro overlay -->
+  <div id="intro" class="modal">
+    <div class="modalBox center" style="flex-direction:column;text-align:center">
+      <h1 style="color:#046">CLIMATE TIME TRAVELLER</h1>
+      <p class="muted">A browser port — collect eco actions, avoid pollutants. Answer quizzes to repair the timeline.</p>
+      <div style="margin-top:14px"><button id="introStart" class="big">Press to Start</button></div>
+      <div style="margin-top:8px" class="muted">High Score: <span id="introHigh">0</span></div>
+    </div>
+  </div>
+
+  <script>
+  // --- Config (similar to the Python version) ---
+  const WIDTH = 900, HEIGHT = 600;
+  const PLAYER_SPEED = 4.5;
+  const INITIAL_LIVES = 3;
+
+  const LEVELS = [
+    {name: 'Past - Pre-Industrial', bg:'#a0c8ff', pollutant_rate:2000, good_rate:1800, speed_mult:0.8, time_limit:45},
+    {name: 'Present - Modern Day', bg:'#b4e6c8', pollutant_rate:1400, good_rate:1600, speed_mult:1.0, time_limit:50},
+    {name: 'Future - Restored or Ruined', bg:'#7878b4', pollutant_rate:1000, good_rate:1400, speed_mult:1.3, time_limit:60}
+  ];
+
+  const QUIZ_POOL = [
+    {q:'Which action reduces carbon footprint the most?', choices:['Flying less','Planting a tree once','Turning lights off','Using a reusable straw'], a:0},
+    {q:'Which energy source is renewable?', choices:['Coal','Wind','Natural Gas','Diesel'], a:1},
+    {q:'What recycles into new bottles?', choices:['Paper','Glass','Food','Battery'], a:1},
+    {q:'Which reduces water waste?', choices:['Fixing leaks','Washing car daily','Overwatering lawn','Leaving tap running'], a:0},
+    {q:'What is composting?', choices:['Burning waste','Recycling plastics','Turning organic waste into soil','Incineration'], a:2}
+  ];
+
+  // canvas + context
+  const c = document.getElementById('c'), ctx = c.getContext('2d');
+  c.width = WIDTH; c.height = HEIGHT; c.setAttribute('tabindex','0'); c.style.outline='none';
+
+  // UI elements
+  const scoreEl = document.getElementById('score');
+  const livesEl = document.getElementById('lives');
+  const levelEl = document.getElementById('levelName');
+  const timeEl = document.getElementById('timeLeft');
+  const highEl = document.getElementById('high');
+  const intro = document.getElementById('intro');
+  const introHigh = document.getElementById('introHigh');
+
+  // Game state
+  let player, goods = [], pollutants = [], all = [];
+  let keys = {};
+  let playing = false, paused = false; 
+  let levelIndex = 0; 
+  let levelInfo = LEVELS[0];
+  let levelEnd = 0;
+  let lastGood = 0, lastPoll = 0;
+  let score = 0, lives = INITIAL_LIVES, highScore = 0;
+  let quizActive = false, quizObj = null, quizResolve = null;
+
+  // load highscore
+  try{ highScore = parseInt(localStorage.getItem('ctt_high')||'0',10)||0; }catch(e){highScore=0}
+  highEl.textContent = highScore; introHigh.textContent = highScore;
+
+  // helper shapes
+  function drawPlayer(x,y,size){
+    ctx.save(); ctx.translate(x,y);
+    ctx.beginPath(); ctx.moveTo(0,-size/2); ctx.lineTo(-size/2,size/2); ctx.lineTo(size/2,size/2); ctx.closePath();
+    ctx.fillStyle = '#3ca0d0'; ctx.fill();
+    ctx.beginPath(); ctx.arc(0, size*0.05, size*0.12, 0, Math.PI*2); ctx.fillStyle='#ff8c2b'; ctx.fill();
+    ctx.restore();
+  }
+
+  function drawTree(x,y){ ctx.fillStyle='#5a3f26'; ctx.fillRect(x-4,y-12,8,12); ctx.beginPath(); ctx.arc(x,y-20,14,0,Math.PI*2); ctx.fillStyle='#2aa03f'; ctx.fill(); }
+  function drawSolar(x,y){ ctx.fillStyle='#2f2f2f'; ctx.fillRect(x-12,y-8,24,12); ctx.strokeStyle='#ffd566'; ctx.beginPath(); ctx.moveTo(x-6,y-12); ctx.lineTo(x-6,y-2); ctx.stroke(); }
+  function drawBike(x,y){ ctx.strokeStyle='#444'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(x-8,y,6,0,Math.PI*2); ctx.stroke(); ctx.beginPath(); ctx.arc(x+8,y,6,0,Math.PI*2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x-8,y); ctx.lineTo(x,y-8); ctx.lineTo(x+8,y); ctx.stroke(); }
+  function drawSmoke(x,y){ ctx.fillStyle='rgba(120,120,120,0.9)'; ctx.beginPath(); ctx.arc(x,y,12,0,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.arc(x-6,y+6,9,0,Math.PI*2); ctx.fill(); }
+  function drawTrash(x,y){ ctx.fillStyle='#503c3c'; ctx.fillRect(x-12,y-8,24,16); }
+  function drawAcid(x,y){ ctx.fillStyle='rgba(150,0,150,0.95)'; ctx.beginPath(); ctx.arc(x,y,12,0,Math.PI*2); ctx.fill(); }
+
+  // entity factories
+  function spawnGood(kind){ const obj = {type:'good', kind:kind, x: Math.random()*(WIDTH-60)+30, y:-20, w:28, h:28, speed: (1.5 + Math.random()*1.0)*(1+levelIndex*0.25) }; goods.push(obj); all.push(obj); }
+  function spawnPoll(type){ const obj = {type:'poll', p_type:type, x: Math.random()*(WIDTH-60)+30, y:-20, w:32, h:32, speed: (1.7 + Math.random()*1.3)*(1+levelIndex*0.4) }; pollutants.push(obj); all.push(obj); }
+
+  // player init
+  function resetPlayer(){ player = {x: WIDTH/2, y: HEIGHT-80, size:42, speed: PLAYER_SPEED, lives: INITIAL_LIVES}; }
+
+  // collisions (AABB simple)
+  function hit(a,b){ return !(a.x+a.w/2 < b.x-b.w/2 || a.x-a.w/2 > b.x+b.w/2 || a.y+a.h/2 < b.y-b.h/2 || a.y-a.h/2 > b.y+b.h/2); }
+
+  // quiz (returns a Promise that resolves to true/false)
+  function startQuiz(){
+    if(quizActive) return Promise.resolve(null);
+    quizActive = true; const q = QUIZ_POOL[Math.floor(Math.random()*QUIZ_POOL.length)]; quizObj = {q:q, selected:0};
+    const modal = document.getElementById('quizModal'); const qQ = document.getElementById('quizQ'); const qC = document.getElementById('quizChoices');
+    qQ.textContent = q.q; qC.innerHTML = '';
+    q.choices.forEach((ch,i)=>{
+      const d = document.createElement('div'); d.className='choice'+(i===0?' sel':''); d.textContent = ch; d.tabIndex=0; d.onclick=()=>{ quizObj.selected=i; renderChoices(); };
+      qC.appendChild(d);
+    });
+    function renderChoices(){ Array.from(qC.children).forEach((el,idx)=>{ el.className = 'choice'+(idx===quizObj.selected?' sel':''); }); }
+
+    modal.classList.remove('hidden');
+
+    return new Promise(res=>{
+      quizResolve = res;
+      function submit(){ modal.classList.add('hidden'); quizActive=false; const correct = (quizObj.selected===q.a); quizResolve(correct); cleanup(); }
+      function cancel(){ modal.classList.add('hidden'); quizActive=false; quizResolve(false); cleanup(); }
+      function keyHandler(e){ if(e.key==='ArrowUp' || e.key==='w'){ quizObj.selected = (quizObj.selected-1+q.choices.length)%q.choices.length; renderChoices(); }
+        if(e.key==='ArrowDown' || e.key==='s'){ quizObj.selectedrChoices(); }
+        if (e.key === 'Enter' || e.code === 'Space' || e.key === ' ' || e.key === 'Spacebar') { submit(); }
+        if(e.key==='Escape'){ cancel(); }
+      }
+      document.getElementById('quizSubmit').onclick = submit;
+      document.getElementById('quizCancel').onclick = cancel;
+      document.addEventListener('keydown', keyHandler);
+      function cleanup(){ document.removeEventListener('keydown', keyHandler); document.getElementById('quizSubmit').onclick = null; document.getElementById('quizCancel').onclick = null; }
+    });
+  }
+
+  // flash text
+  let flashMsg = null, flashEnd = 0;
+  function flash(text, color='#fff', ms=700){ flashMsg = {txt:text,color}; flashEnd = performance.now()+ms; }
+
+  // scene draws
+  function drawBackground(){ ctx.fillStyle = levelInfo.bg; ctx.fillRect(0,0,WIDTH,HEIGHT);
+    // horizon / decoration
+    ctx.save(); if(levelIndex===0){ for(let i=0;i<6;i++){ const x=80+i*140; ctx.fillStyle='#472b18'; ctx.fillRect(x, HEIGHT-140,8,60); ctx.beginPath(); ctx.fillStyle='#288c2b'; ctx.arc(x+4, HEIGHT-160,30,0,Math.PI*2); ctx.fill(); } }
+    else if(levelIndex===1){ for(let i=0;i<6;i++){ const x=50+i*140; ctx.fillStyle='#5a5a6e'; ctx.fillRect(x, HEIGHT-170,40,120); if(i%2===0){ ctx.fillStyle='#472b18'; ctx.fillRect(x+45, HEIGHT-110,8,40); ctx.beginPath(); ctx.fillStyle='#288c2b'; ctx.arc(x+49, HEIGHT-130,18,0,Math.PI*2); ctx.fill(); } } }
+    else{ for(let i=0;i<7;i++){ const x=60+i*120; ctx.beginPath(); ctx.fillStyle='#46b478'; ctx.ellipse(x, HEIGHT-120,30,60,0,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#1e244b'; ctx.fillRect(x+22, HEIGHT-140,16,80); } }
+    ctx.restore();
+  }
+
+  function drawHUD(){ scoreEl.textContent = score; livesEl.textContent = '❤'.repeat(player.lives); levelEl.textContent = levelInfo.name; if (typeof levelEnd === 'number') { timeEl.textContent = Math.max(0, Math.ceil((levelEnd - performance.now())/1000)) + 's'; } else { timeEl.textContent = '0s'; } highEl.textContent = highScore; }
+
+  function update(dt){
+    if(!playing || paused || quizActive) return;
+    // spawn
+    const now = performance.now();
+    if(now - lastGood > levelInfo.good_rate){ lastGood = now; spawnGood(['tree','solar','bike'][Math.floor(Math.random()*3)]); }
+    if(now - lastPoll > levelInfo.pollutant_rate){ lastPoll = now; spawnPoll(['smoke','trash','acid'][Math.floor(Math.random()*3)]); }
+
+    // player movement
+    let dx=0, dy=0; if(keys['ArrowLeft']||keys['a']) dx-=player.speed; if(keys['ArrowRight']||keys['d']) dx+=player.speed; if(keys['ArrowUp']||keys['w']) dy-=player.speed; if(keys['ArrowDown']||keys['s']) dy+=player.speed;
+    player.x = Math.max(0+player.size/2, Math.min(WIDTH-player.size/2, player.x+dx));
+    player.y = Math.max(0+player.size/2, Math.min(HEIGHT-player.size/2, player.y+dy));
+
+    // update entities
+    goods.forEach(g=>g.y += g.speed);
+    pollutants.forEach(p=>p.y += p.speed);
+    // remove offscreen
+    goods = goods.filter(g=>g.y < HEIGHT+40);
+    pollutants = pollutants.filter(p=>p.y < HEIGHT+40);
+
+    // collisions
+    let pbox = {x:player.x, y:player.y, w:player.size, h:player.size};
+    // goods collisions
+    for(let i=goods.length-1;i>=0;i--){ const g=goods[i]; const gbox={x:g.x,y:g.y,w:g.w,h:g.h}; if(hit(pbox,gbox)){ goods.splice(i,1); score += 20 + levelIndex*5; flash('Collected +'+(20+levelIndex*5),'#3c9'); if(Math.random()<0.2 && !quizActive){ startQuiz().then(correct=>{ if(correct){ score += 50; flash('Correct! Timeline repaired +50','#2a8'); } else { score = Math.max(0, score-20); flash('Wrong! -20','#e04'); } }); } } }
+    // pollutant collisions
+    for(let i=pollutants.length-1;i>=0;i--){ const p=pollutants[i]; const pbox = {x:p.x,y:p.y,w:p.w,h:p.h}; if(hit({x:player.x,y:player.y,w:player.size,h:player.size}, pbox)){ pollutants.splice(i,1); player.lives -=1; flash('Hit by pollutant! -1 life','#e04'); if(player.lives <= 0){ // game over
+          playing = false; showGameOver(); return; } } }
+
+    // time check
+    if(performance.now() >= levelEnd){ // level cleared
+      score += 100 + levelIndex*50; flash('Level complete! Bonus +' + (100 + levelIndex*50),'#2b8'); levelIndex += 1; if(levelIndex >= LEVELS.length){ playing = false; showVictory(); return; } else { // setup next
+        levelInfo = LEVELS[levelIndex]; goods=[];pollutants=[]; player.x = WIDTH/2; player.y = HEIGHT-80; levelEnd = performance.now() + levelInfo.time_limit*1000; }
+    }
+  }
+
+  function draw(dt){ drawBackground();
+    // draw entities
+    goods.forEach(g=>{ if(g.kind==='tree') drawTree(g.x,g.y); else if(g.kind==='solar') drawSolar(g.x,g.y); else drawBike(g.x,g.y); });
+    pollutants.forEach(p=>{ if(p.p_type==='smoke') drawSmoke(p.x,p.y); else if(p.p_type==='trash') drawTrash(p.x,p.y); else drawAcid(p.x,p.y); });
+    // draw player
+    drawPlayer(player.x, player.y, player.size);
+    // flash
+    if(flashMsg && performance.now() < flashEnd){ ctx.fillStyle = 'rgba(255,255,255,0.95)'; ctx.fillRect(0, HEIGHT/2-30, WIDTH, 60); ctx.fillStyle = flashMsg.color; ctx.font = '22px Arial'; ctx.textAlign='center'; ctx.fillText(flashMsg.txt, WIDTH/2, HEIGHT/2+8); }
+    drawHUD();
+  }
+
+  // main loop
+  let last = performance.now();
+  function loop(t){ const dt = t-last; last = t; update(dt); draw(dt); if(playing) requestAnimationFrame(loop); }
+
+  // scene helpers
+  function startLevel(idx){ levelIndex = idx; levelInfo = LEVELS[levelIndex]; levelEnd = performance.now() + levelInfo.time_limit*1000; lastGood = performance.now(); lastPoll = performance.now(); goods=[];pollutants=[]; score=0; player.lives=INITIAL_LIVES; }
+
+  function startGame(){ try{ resetPlayer(); playing = true; paused=false; quizActive=false; levelIndex=0; levelInfo=LEVELS[0]; levelEnd = performance.now() + levelInfo.time_limit*1000; lastGood=performance.now(); lastPoll=performance.now(); score=0; player.lives=INITIAL_LIVES; requestAnimationFrame(loop); } catch(e){ console.error('startGame error', e); alert('An error occurred starting the game. Open the developer console (F12) and paste the error here so I can help.'); } }
+
+  function showGameOver(){ // display overlay
+    setTimeout(()=>{ alert('GAME OVER\nFinal Score: '+score); if(score>highScore){ highScore = score; try{ localStorage.setItem('ctt_high', highScore); }catch(e){} } highEl.textContent = highScore; introHigh.textContent = highScore; intro.classList.remove('hidden'); }, 50);
+  }
+  function showVictory(){ setTimeout(()=>{ alert('TIMELINE RESTORED!\nFinal Score: '+score); if(score>highScore){ highScore = score; try{ localStorage.setItem('ctt_high', highScore); }catch(e){} } highEl.textContent = highScore; introHigh.textContent = highScore; intro.classList.remove('hidden'); },50); }
+
+  // UI wiring
+  document.getElementById('startBtn').onclick = ()=>{ intro.classList.add('hidden'); startGame(); };
+  document.getElementById('introStart').onclick = ()=>{ intro.classList.add('hidden'); startGame(); };
+  document.getElementById('menuHow').onclick = ()=>{ alert('Collect good items (trees, solar panels, bh P.'); };
+
+  // keyboard
+  window.addEventListener('keydown', e=>{ keys[e.key]=true; if(e.key==='p' || e.key==='P'){ paused = !paused; if(!paused && playing) last = performance.now(); } if((e.code === 'Space' || e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') && intro.classList.contains('hidden') && !playing){ startGame(); } });
+  window.addEventListener('keyup', e=>{ keys[e.key]=false; });
+
+  // start with intro
+  resetPlayer(); intro.classList.remove('hidden');
+
+  // expose a tiny help for mobile: tap canvas to focus keys
+  c.addEventListener('click', ()=>c.focus());
+  </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Meet our tribal artisans and learn how we're bridging the gap between traditional crafts and modern markets." />
+  <title>TribalArt — Our Artisans</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="2RUSHII.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="1home.html"> 
+        <span class="brand-mark">◉</span>
+        <span class="brand-name">Tribal Tales</span>
+      </a>
+      <nav class="nav">
+        <a href="1home.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="artisans.html">Artisans</a>
+        <a href="map.html">Map</a>
+        <a href="impact.html">Impact</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <div class="controls">
+        <div class="search">
+          <input id="headerSearch" placeholder="Search tribal art..." aria-label="Search products" />
+          <button id="searchBtn" aria-label="Search">🔍</button>
+        </div>
+        <button id="cartBtn" class="cart-btn" aria-label="Open cart">
+          <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">Our Artisans</h1>
+        <p class="lead">Bridging the gap between traditional tribal art and modern markets</p>
+      </div>
+    </section>
+
+    <!-- The Challenge Section -->
+    <section class="container products-section">
+      <div class="challenge-section">
+        <h2>The Challenge We're Solving</h2>
+        <div class="challenge-grid">
+          <div class="challenge-card problem">
+            <div class="challenge-icon">😔</div>
+            <h3>The Problem</h3>
+            <ul>
+              <li>Traditional tribal artists struggle to reach customers</li>
+              <li>Limited knowledge of online marketing and sales</li>
+              <li>Middlemen taking most of the profits</li>
+              <li>Art forms dying due to lack of market access</li>
+              <li>Artists forced to abandon crafts for other work</li>
+            </ul>
+          </div>
+          
+          <div class="challenge-card solution">
+            <div class="challenge-icon">✨</div>
+            <h3>Our Solution</h3>
+            <ul>
+              <li>Direct connection between artists and customers</li>
+              <li>We handle all online marketing and sales</li>
+              <li>Fair pricing with maximum profit to artists</li>
+              <li>Preserving traditional art forms for future generations</li>
+              <li>Empowering artists to focus on their craft</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Artisans -->
+    <section class="container products-section">
+      <div class="section-head">
+        <h2>Meet Our Featured Artisans</h2>
+        <p>Real people, real stories, real impact</p>
+      </div>
+      
+      <div class="artisans-grid">
+        <div class="artisan-profile" onclick="showArtisanDetails('meera')">
+          <div class="artisan-image">
+            <img src="hero1.jpg" alt="Meera - Warli Artist">
+            <div class="artisan-badge">Featured</div>
+          </div>
+          <div class="artisan-info">
+            <h3>Meera Patil</h3>
+            <p class="artisan-location">Maharashtra, India</p>
+            <p class="artisan-craft">Warli Art Specialist</p>
+            <div class="artisan-stats">
+              <span class="stat">3 years with us</span>
+              <span class="stat">150+ pieces sold</span>
+              <span class="stat">15 women employed</span>
+            </div>
+            <div class="artisan-story">
+              <p>"Before TribalArt, I was selling my paintings for ₹200-300 to middlemen. Now I earn ₹2000-3000 per piece and have started my own workshop!"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="artisan-profile" onclick="showArtisanDetails('rajesh')">
+          <div class="artisan-image">
+            <img src="mask.jpg" alt="Rajesh - Metal Craft Artist">
+            <div class="artisan-badge">Master Craftsman</div>
+          </div>
+          <div class="artisan-info">
+            <h3>Rajesh Kumar</h3>
+            <p class="artisan-location">Chhattisgarh, India</p>
+            <p class="artisan-craft">Bastar Metal Craft</p>
+            <div class="artisan-stats">
+              <span class="stat">5 years with us</span>
+              <span class="stat">300+ pieces sold</span>
+              <span class="stat">8 apprentices trained</span>
+            </div>
+            <div class="artisan-story">
+              <p>"I was about to give up metal crafting because I couldn't sell my work. TribalArt taught me about online sales and now I'm training the next generation!"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="artisan-profile" onclick="showArtisanDetails('sunita')">
+          <div class="artisan-image">
+            <img src="neck.jpg" alt="Sunita - Jewelry Maker">
+            <div class="artisan-badge">Rising Star</div>
+          </div>
+          <div class="artisan-info">
+            <h3>Sunita Devi</h3>
+            <p class="artisan-location">Rajasthan, India</p>
+            <p class="artisan-craft">Tribal Jewelry</p>
+            <div class="artisan-stats">
+              <span class="stat">2 years with us</span>
+              <span class="stat">200+ pieces sold</span>
+              <span class="stat">Family supported</span>
+            </div>
+            <div class="artisan-story">
+              <p>"After my husband passed, I had no income. TribalArt helped me turn my jewelry making into a business that supports my children's education."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="artisan-profile" onclick="showArtisanDetails('lakshmi')">
+          <div class="artisan-image">
+            <img src="2ndmask.jpg" alt="Lakshmi - Saura Artist">
+            <div class="artisan-badge">Cultural Guardian</div>
+          </div>
+          <div class="artisan-info">
+            <h3>Lakshmi Mahanta</h3>
+            <p class="artisan-location">Odisha, India</p>
+            <p class="artisan-craft">Saura Art</p>
+            <div class="artisan-stats">
+              <span class="stat">4 years with us</span>
+              <span class="stat">180+ pieces sold</span>
+              <span class="stat">Tradition preserved</span>
+            </div>
+            <div class="artisan-story">
+              <p>"My grandmother taught me Saura art, but I never thought I could make a living from it. TribalArt made it possible to honor her legacy."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How We Help Section -->
+    <section class="container info-grid">
+      <div class="card">
+        <h2>How We Bridge the Gap</h2>
+        <div class="help-process">
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Discovery & Connection</h4>
+              <p>We travel to remote tribal communities to find talented artists who need market access.</p>
+            </div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Training & Support</h4>
+              <p>We teach artists about quality standards, photography, and product presentation for online sales.</p>
+            </div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Marketing & Sales</h4>
+              <p>We handle all online marketing, social media, and sales channels so artists can focus on creating.</p>
+            </div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Fair Payment</h4>
+              <p>Artists receive 70-80% of the sale price, with the rest covering our platform and marketing costs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3>Join Our Mission</h3>
+        <p>Help us connect more tribal artists with customers worldwide.</p>
+        
+        <div class="mission-stats">
+          <div class="mission-stat">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">Artists Connected</span>
+          </div>
+          <div class="mission-stat">
+            <span class="stat-number">25</span>
+            <span class="stat-label">Communities Reached</span>
+          </div>
+          <div class="mission-stat">
+            <span class="stat-number">₹50L+</span>
+            <span class="stat-label">Paid to Artists</span>
+          </div>
+        </div>
+        
+        <div class="artisan-actions">
+          <a href="shop.html" class="btn primary">Shop Their Art</a>
+          <a href="map.html" class="btn outline">Visit Communities</a>
+        </div>
+        
+        <div class="become-artisan">
+          <h4>Are You a Tribal Artist?</h4>
+          <p>Join our platform and start selling your art online!</p>
+          <button class="btn outline" onclick="showArtisanForm()">Apply to Join</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Your Cart</h3>
+      <button id="closeCart" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: ₹<span id="cartTotal">0.00</span></div>
+      <button id="checkout" class="btn primary">Checkout</button>
+      <button id="clearCart" class="btn outline">Clear</button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" aria-live="polite" role="status"></div>
+  
+  <!-- Artisan Details Modal -->
+  <div id="artisanModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeArtisanModal()">&times;</span>
+      <div id="artisanModalContent"></div>
+    </div>
+  </div>
+
+  <!-- Become an Artisan Form Modal -->
+  <div id="artisanFormModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeArtisanForm()">&times;</span>
+      <h2>Join Our Artisan Community</h2>
+      <form id="artisanForm" class="artisan-form">
+        <div class="form-group">
+          <label for="artistName">Full Name</label>
+          <input type="text" id="artistName" required>
+        </div>
+        <div class="form-group">
+          <label for="artistLocation">Location (State, India)</label>
+          <input type="text" id="artistLocation" required>
+        </div>
+        <div class="form-group">
+          <label for="artistCraft">Art Form</label>
+          <select id="artistCraft" required>
+            <option value="">Select your art form</option>
+            <option value="warli">Warli Art</option>
+            <option value="gond">Gond Art</option>
+            <option value="jewelry">Tribal Jewelry</option>
+            <option value="metal">Metal Craft</option>
+            <option value="textile">Textile/Weaving</option>
+            <option value="pottery">Pottery</option>
+            <option value="other">Other Traditional Craft</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="artistExperience">Years of Experience</label>
+          <input type="number" id="artistExperience" min="1" required>
+        </div>
+        <div class="form-group">
+          <label for="artistStory">Tell us your story</label>
+          <textarea id="artistStory" rows="4" placeholder="How did you learn your craft? What challenges do you face?"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="artistContact">Contact Number</label>
+          <input type="tel" id="artistContact" required>
+        </div>
+        <button type="submit" class="btn primary">Submit Application</button>
+      </form>
+    </div>
+  </div>
+  
+  <script src="11.js" defer></script>
+  <script>
+    // Artisan details data
+    const artisanDetails = {
+      meera: {
+        name: "Meera Patil",
+        location: "Maharashtra, India",
+        craft: "Warli Art Specialist",
+        story: "Meera learned Warli art from her grandmother but struggled to sell her paintings. Middlemen were paying her only ₹200-300 per piece. Through TribalArt, she now earns ₹2000-3000 per piece and has started her own workshop employing 15 other women from her village.",
+        achievements: [
+          "Started her own workshop",
+          "Employed 15 women from her village",
+          "Built a school for children",
+          "Earned 10x more than before"
+        ],
+        gallery: ["hero1.jpg", "mask.jpg", "girl.jpg"]
+      },
+      rajesh: {
+        name: "Rajesh Kumar",
+        location: "Chhattisgarh, India",
+        craft: "Bastar Metal Craft",
+        story: "Rajesh was about to abandon his family's metal crafting tradition because he couldn't find buyers. TribalArt helped him understand online marketing and now he's not only selling his work but training the next generation of craftsmen.",
+        achievements: [
+          "Revived traditional metal crafting",
+          "Trained 8 apprentices",
+          "His sons are learning the craft",
+          "Preserved family tradition"
+        ],
+        gallery: ["mask.jpg", "jew.jpg", "hand.jpg"]
+      },
+      sunita: {
+        name: "Sunita Devi",
+        location: "Rajasthan, India",
+        craft: "Tribal Jewelry",
+        story: "After her husband's death, Sunita had no income to support her children. She knew how to make beautiful tribal jewelry but didn't know how to sell it. TribalArt helped her turn her skills into a sustainable business.",
+        achievements: [
+          "Became primary breadwinner",
+          "Children are getting education",
+          "Supports extended family",
+          "Gained financial independence"
+        ],
+        gallery: ["neck.jpg", "girl.jpg", "jew.jpg"]
+      },
+      lakshmi: {
+        name: "Lakshmi Mahanta",
+        location: "Odisha, India",
+        craft: "Saura Art",
+        story: "Lakshmi learned Saura art from her grandmother but never thought she could make a living from it. TribalArt helped her understand the value of her traditional art and connect with customers who appreciate authentic tribal culture.",
+        achievements: [
+          "Preserved grandmother's legacy",
+          "Taught traditional techniques",
+          "Connected with global audience",
+          "Earned respect for her art"
+        ],
+        gallery: ["2ndmask.jpg", "hero1.jpg", "mask.jpg"]
+      }
+    };
+
+    // Show artisan details
+    function showArtisanDetails(artisanId) {
+      const modal = document.getElementById('artisanModal');
+      const content = document.getElementById('artisanModalContent');
+      const artisan = artisanDetails[artisanId];
+      
+      content.innerHTML = `
+        <div class="artisan-detail">
+          <div class="artisan-header">
+            <img src="${artisan.gallery[0]}" alt="${artisan.name}" class="detail-image">
+            <div class="artisan-meta">
+              <h2>${artisan.name}</h2>
+              <p class="location">${artisan.location}</p>
+              <p class="craft">${artisan.craft}</p>
+            </div>
+          </div>
+          <div class="artisan-story-detail">
+            <h3>Their Story</h3>
+            <p>${artisan.story}</p>
+          </div>
+          <div class="achievements">
+            <h3>Achievements</h3>
+            <ul>
+              ${artisan.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="artisan-gallery">
+            <h3>Their Work</h3>
+            <div class="gallery-grid">
+              ${artisan.gallery.map(image => `<img src="${image}" alt="Artwork" class="gallery-image">`).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+      modal.style.display = 'block';
+    }
+
+    // Close artisan modal
+    function closeArtisanModal() {
+      document.getElementById('artisanModal').style.display = 'none';
+    }
+
+    // Show artisan form
+    function showArtisanForm() {
+      document.getElementById('artisanFormModal').style.display = 'block';
+    }
+
+    // Close artisan form
+    function closeArtisanForm() {
+      document.getElementById('artisanFormModal').style.display = 'none';
+    }
+
+    // Handle artisan form submission
+    document.getElementById('artisanForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      showToast('Thank you for your application! We will contact you within 48 hours.');
+      closeArtisanForm();
+      this.reset();
+    });
+
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+      const artisanModal = document.getElementById('artisanModal');
+      const formModal = document.getElementById('artisanFormModal');
+      
+      if (event.target === artisanModal) {
+        closeArtisanModal();
+      }
+      if (event.target === formModal) {
+        closeArtisanForm();
+      }
+    }
+
+    // Add hover effects to artisan profiles
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.artisan-profile').forEach(profile => {
+        profile.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        profile.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

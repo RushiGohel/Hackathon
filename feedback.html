@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Share your feedback about our tribal art marketplace and help us improve." />
+  <title>TribalArt — Feedback</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="2RUSHII.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="1home.html"> 
+        <span class="brand-mark">◉</span>
+        <span class="brand-name">Tribal Tales</span>
+      </a>
+      <nav class="nav">
+        <a href="1home.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="artisans.html">Artisans</a>
+        <a href="map.html">Map</a>
+        <a href="impact.html">Impact</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <div class="controls">
+        <div class="search">
+          <input id="headerSearch" placeholder="Search tribal art..." aria-label="Search products" />
+          <button id="searchBtn" aria-label="Search">🔍</button>
+        </div>
+        <button id="cartBtn" class="cart-btn" aria-label="Open cart">
+          <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">Your Feedback Matters</h1>
+        <p class="lead">Help us improve and support more tribal artisans</p>
+      </div>
+    </section>
+
+    <section class="container products-section">
+      <div class="feedback-intro">
+        <h2>Share Your Experience</h2>
+        <p>Your feedback helps us better serve our tribal artisans and customers. Whether you're a customer, artisan, or supporter, we'd love to hear from you.</p>
+      </div>
+
+      <div class="feedback-grid">
+        <!-- Customer Feedback Form -->
+        <div class="feedback-card">
+          <div class="feedback-header">
+            <div class="feedback-icon">🛍️</div>
+            <h3>Customer Feedback</h3>
+            <p>Tell us about your shopping experience</p>
+          </div>
+          <form id="customerFeedback" class="feedback-form">
+            <div class="form-group">
+              <label for="customerName">Name</label>
+              <input type="text" id="customerName" required>
+            </div>
+            <div class="form-group">
+              <label for="customerEmail">Email</label>
+              <input type="email" id="customerEmail" required>
+            </div>
+            <div class="form-group">
+              <label for="orderId">Order ID (Optional)</label>
+              <input type="text" id="orderId">
+            </div>
+            <div class="form-group">
+              <label for="rating">Overall Rating</label>
+              <div class="rating-container">
+                <div class="star-rating">
+                  <input type="radio" id="star5" name="rating" value="5">
+                  <label for="star5">★</label>
+                  <input type="radio" id="star4" name="rating" value="4">
+                  <label for="star4">★</label>
+                  <input type="radio" id="star3" name="rating" value="3">
+                  <label for="star3">★</label>
+                  <input type="radio" id="star2" name="rating" value="2">
+                  <label for="star2">★</label>
+                  <input type="radio" id="star1" name="rating" value="1">
+                  <label for="star1">★</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="customerFeedback">Your Feedback</label>
+              <textarea id="customerFeedback" rows="4" placeholder="Tell us about your experience with our products, service, or website..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="improvement">Suggestions for Improvement</label>
+              <textarea id="improvement" rows="3" placeholder="How can we make your experience better?"></textarea>
+            </div>
+            <button type="submit" class="btn primary">Submit Feedback</button>
+          </form>
+        </div>
+
+        <!-- Artisan Feedback Form -->
+        <div class="feedback-card">
+          <div class="feedback-header">
+            <div class="feedback-icon">🎨</div>
+            <h3>Artisan Feedback</h3>
+            <p>Share your experience as a tribal artist</p>
+          </div>
+          <form id="artisanFeedback" class="feedback-form">
+            <div class="form-group">
+              <label for="artisanName">Name</label>
+              <input type="text" id="artisanName" required>
+            </div>
+            <div class="form-group">
+              <label for="artisanEmail">Email</label>
+              <input type="email" id="artisanEmail" required>
+            </div>
+            <div class="form-group">
+              <label for="artisanLocation">Location</label>
+              <input type="text" id="artisanLocation" placeholder="State, India" required>
+            </div>
+            <div class="form-group">
+              <label for="artisanCraft">Art Form</label>
+              <select id="artisanCraft" required>
+                <option value="">Select your art form</option>
+                <option value="warli">Warli Art</option>
+                <option value="gond">Gond Art</option>
+                <option value="jewelry">Tribal Jewelry</option>
+                <option value="metal">Metal Craft</option>
+                <option value="textile">Textile/Weaving</option>
+                <option value="pottery">Pottery</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="artisanExperience">How has TribalArt helped you?</label>
+              <textarea id="artisanExperience" rows="4" placeholder="Tell us about your journey with us..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="artisanSuggestions">Suggestions for Better Support</label>
+              <textarea id="artisanSuggestions" rows="3" placeholder="How can we better support you and other artisans?"></textarea>
+            </div>
+            <button type="submit" class="btn primary">Submit Feedback</button>
+          </form>
+        </div>
+
+        <!-- General Feedback Form -->
+        <div class="feedback-card">
+          <div class="feedback-header">
+            <div class="feedback-icon">💬</div>
+            <h3>General Feedback</h3>
+            <p>Share your thoughts about our mission</p>
+          </div>
+          <form id="generalFeedback" class="feedback-form">
+            <div class="form-group">
+              <label for="generalName">Name</label>
+              <input type="text" id="generalName" required>
+            </div>
+            <div class="form-group">
+              <label for="generalEmail">Email</label>
+              <input type="email" id="generalEmail" required>
+            </div>
+            <div class="form-group">
+              <label for="feedbackType">Type of Feedback</label>
+              <select id="feedbackType" required>
+                <option value="">Select feedback type</option>
+                <option value="website">Website Experience</option>
+                <option value="mission">Our Mission</option>
+                <option value="suggestions">Suggestions</option>
+                <option value="partnership">Partnership Inquiry</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="generalMessage">Your Message</label>
+              <textarea id="generalMessage" rows="5" placeholder="Share your thoughts, suggestions, or questions..."></textarea>
+            </div>
+            <button type="submit" class="btn primary">Submit Feedback</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="container info-grid">
+      <div class="card">
+        <h2>What People Are Saying</h2>
+        <div class="testimonials-grid">
+          <div class="testimonial-item">
+            <div class="testimonial-rating">★★★★★</div>
+            <p>"The quality of tribal art is amazing! I love knowing that my purchase directly supports the artisans."</p>
+            <span class="testimonial-author">- Sarah M., Customer</span>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-rating">★★★★★</div>
+            <p>"TribalArt has changed my life. I can now support my family through my traditional craft."</p>
+            <span class="testimonial-author">- Meera P., Artisan</span>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-rating">★★★★★</div>
+            <p>"Beautiful website and great customer service. The map feature helped me learn about different art forms."</p>
+            <span class="testimonial-author">- John D., Customer</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3>Quick Feedback</h3>
+        <p>Have a quick thought? Use our quick feedback options:</p>
+        
+        <div class="quick-feedback">
+          <button class="quick-btn" onclick="submitQuickFeedback('love')">❤️ I love this!</button>
+          <button class="quick-btn" onclick="submitQuickFeedback('improve')">💡 Needs improvement</button>
+          <button class="quick-btn" onclick="submitQuickFeedback('bug')">🐛 Found a bug</button>
+          <button class="quick-btn" onclick="submitQuickFeedback('suggestion')">💭 Have a suggestion</button>
+        </div>
+        
+        <div class="contact-info">
+          <h4>Need Immediate Help?</h4>
+          <p>Email: tribletales@gmail.com</p>
+          <p>Phone: +91 9313184501</p>
+          <p>Response time: Within 24 hours</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Your Cart</h3>
+      <button id="closeCart" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: ₹<span id="cartTotal">0.00</span></div>
+      <button id="checkout" class="btn primary">Checkout</button>
+      <button id="clearCart" class="btn outline">Clear</button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" aria-live="polite" role="status"></div>
+  
+  <script src="11.js" defer></script>
+  <script>
+    // Handle form submissions
+    document.getElementById('customerFeedback').addEventListener('submit', function(e) {
+      e.preventDefault();
+      showToast('Thank you for your customer feedback! We appreciate your input.');
+      this.reset();
+    });
+
+    document.getElementById('artisanFeedback').addEventListener('submit', function(e) {
+      e.preventDefault();
+      showToast('Thank you for your artisan feedback! Your input helps us improve our support.');
+      this.reset();
+    });
+
+    document.getElementById('generalFeedback').addEventListener('submit', function(e) {
+      e.preventDefault();
+      showToast('Thank you for your feedback! We will review your message and get back to you.');
+      this.reset();
+    });
+
+    // Quick feedback function
+    function submitQuickFeedback(type) {
+      const messages = {
+        love: "Thank you for loving our platform! ❤️",
+        improve: "Thank you for your feedback! We're always working to improve.",
+        bug: "Thank you for reporting this! We'll look into it right away.",
+        suggestion: "Thank you for your suggestion! We'll consider it for future updates."
+      };
+      showToast(messages[type]);
+    }
+
+    // Star rating functionality
+    document.querySelectorAll('.star-rating input').forEach(input => {
+      input.addEventListener('change', function() {
+        const rating = this.value;
+        const stars = this.parentNode.querySelectorAll('label');
+        stars.forEach((star, index) => {
+          if (index < rating) {
+            star.style.color = '#ffc107';
+          } else {
+            star.style.color = '#ddd';
+          }
+        });
+      });
+    });
+
+    // Initialize star ratings
+    document.querySelectorAll('.star-rating').forEach(rating => {
+      const labels = rating.querySelectorAll('label');
+      labels.forEach(label => {
+        label.style.color = '#ddd';
+        label.style.cursor = 'pointer';
+        label.style.fontSize = '24px';
+        label.style.marginRight = '5px';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tap the Leak - Water Saver</title>
+  <style>
+    body {
+      margin: 0;
+      text-align: center;
+      background: linear-gradient(#56CCF2, #2F80ED);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      margin: 10px;
+    }
+    #hud {
+      font-size: 20px;
+      margin: 10px;
+    }
+    canvas {
+      background: #0f2027;
+      display: block;
+      margin: auto;
+      border: 3px solid #fff;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💧 Tap the Leak</h1>
+  <div id="hud">
+    Score: <span id="score">0</span> | Missed: <span id="missed">0</span>
+  </div>
+  <canvas id="gameCanvas" width="600" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const scoreEl = document.getElementById("score");
+    const missedEl = document.getElementById("missed");
+
+    let score = 0;
+    let missed = 0;
+
+    let leaks = [];
+    let gameRunning = true;
+
+    function spawnLeak() {
+      const leak = {
+        x: Math.random() * (canvas.width - 60) + 30,
+        y: Math.random() * (canvas.height - 60) + 30,
+        size: 40,
+        time: Date.now()
+      };
+      leaks.push(leak);
+    }
+
+    function drawLeaks() {
+      leaks.forEach(leak => {
+        ctx.beginPath();
+        ctx.fillStyle = "cyan";
+        ctx.arc(leak.x, leak.y, leak.size/2, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = "blue";
+        ctx.font = "16px Arial";
+        ctx.fillText("🚰", leak.x-10, leak.y+5);
+      });
+    }
+
+    function update() {
+      if (!gameRunning) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawLeaks();
+
+      // Remove leaks after 2.5 sec
+      leaks = leaks.filter(leak => {
+        if (Date.now() - leak.time > 2500) {
+          missed++;
+          missedEl.textContent = missed;
+          if (missed >= 5) endGame();
+          return false;
+        }
+        return true;
+      });
+
+      requestAnimationFrame(update);
+    }
+
+    canvas.addEventListener("click", e => {
+      if (!gameRunning) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      leaks = leaks.filter(leak => {
+        const dist = Math.hypot(clickX - leak.x, clickY - leak.y);
+        if (dist < leak.size/2) {
+          score++;
+          scoreEl.textContent = score;
+          return false;
+        }
+        return true;
+      });
+    });
+
+    function endGame() {
+      gameRunning = false;
+      ctx.fillStyle = "rgba(0,0,0,0.6)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.font = "40px Arial";
+      ctx.fillText("Game Over!", canvas.width/2 - 100, canvas.height/2);
+      ctx.font = "20px Arial";
+      ctx.fillText("Final Score: " + score, canvas.width/2 - 70, canvas.height/2 + 40);
+    }
+
+    function startGame() {
+      setInterval(() => {
+        if (gameRunning) spawnLeak();
+      }, 1000);
+
+      update();
+    }
+
+    startGame();
+  </script>
+</body>
+</html>

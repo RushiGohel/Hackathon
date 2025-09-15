@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Log in to your TribalArt account to access exclusive features and support tribal artisans." />
+  <title>TribalArt — Log In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="2RUSHII.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="1home.html"> 
+        <span class="brand-mark">◉</span>
+        <span class="brand-name">Tribal Tales</span>
+      </a>
+      <nav class="nav">
+        <a href="1home.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="artisans.html">Artisans</a>
+        <a href="map.html">Map</a>
+        <a href="impact.html">Impact</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <div class="controls">
+        <div class="search">
+          <input id="headerSearch" placeholder="Search tribal art..." aria-label="Search products" />
+          <button id="searchBtn" aria-label="Search">🔍</button>
+        </div>
+        <button id="cartBtn" class="cart-btn" aria-label="Open cart">
+          <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="auth-hero">
+      <div class="container">
+        <div class="auth-container">
+          <div class="auth-card">
+            <div class="auth-header">
+              <h1>Welcome Back</h1>
+              <p>Log in to your account to continue supporting tribal artisans</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+              </div>
+              
+              <div class="form-options">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="rememberMe">
+                  <span class="checkmark"></span>
+                  Remember me
+                </label>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+              </div>
+              
+              <button type="submit" class="btn primary auth-btn">Log In</button>
+            </form>
+            
+            <div class="auth-footer">
+              <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+            </div>
+          </div>
+          
+          <div class="auth-benefits">
+            <h3>Why Log In?</h3>
+            <div class="benefit-list">
+              <div class="benefit-item">
+                <div class="benefit-icon">🛒</div>
+                <div class="benefit-content">
+                  <h4>Track Your Orders</h4>
+                  <p>Monitor your tribal art purchases and delivery status</p>
+                </div>
+              </div>
+              
+              <div class="benefit-item">
+                <div class="benefit-icon">❤️</div>
+                <div class="benefit-content">
+                  <h4>Save Favorites</h4>
+                  <p>Create wishlists of your favorite tribal art pieces</p>
+                </div>
+              </div>
+              
+              <div class="benefit-item">
+                <div class="benefit-icon">🎨</div>
+                <div class="benefit-content">
+                  <h4>Support Artisans</h4>
+                  <p>Connect directly with tribal artists and their stories</p>
+                </div>
+              </div>
+              
+              <div class="benefit-item">
+                <div class="benefit-icon">💬</div>
+                <div class="benefit-content">
+                  <h4>Exclusive Updates</h4>
+                  <p>Get notified about new artisans and special collections</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" aria-live="polite" role="status"></div>
+  
+  <script src="11.js" defer></script>
+  <script>
+    // Handle login form submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const rememberMe = document.getElementById('rememberMe').checked;
+      
+      // Basic validation
+      if (!email || !password) {
+        showToast('Please fill in all fields');
+        return;
+      }
+      
+      // Simulate login process
+      showToast('Logging you in...');
+      
+      setTimeout(() => {
+        // Store login state
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        if (rememberMe) {
+          localStorage.setItem('rememberMe', 'true');
+        }
+        
+        showToast('Welcome back! Redirecting to your dashboard...');
+        
+        // Redirect to home page
+        setTimeout(() => {
+          window.location.href = '1home.html';
+        }, 1500);
+      }, 1000);
+    });
+    
+    
+    // Check if user is already logged in
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      showToast('You are already logged in!');
+      setTimeout(() => {
+        window.location.href = '1home.html';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

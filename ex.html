@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plant Vibes — Animated Login</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="spores" aria-hidden="true">
+    <!-- Floating particles -->
+    <span style="left:5%;  bottom:-10vh; --drift: 20px; animation-duration: 18s"></span>
+    <span style="left:12%; bottom:-20vh; --drift:-10px; animation-duration: 22s"></span>
+    <span style="left:20%; bottom:-30vh; --drift: 35px; animation-duration: 17s"></span>
+    <span style="left:28%; bottom:-25vh; --drift:-25px; animation-duration: 26s"></span>
+    <span style="left:36%; bottom:-15vh; --drift: 18px; animation-duration: 21s"></span>
+    <span style="left:44%; bottom:-40vh; --drift:-30px; animation-duration: 24s"></span>
+    <span style="left:52%; bottom:-35vh; --drift: 26px; animation-duration: 20s"></span>
+    <span style="left:60%; bottom:-10vh; --drift:-18px; animation-duration: 19s"></span>
+    <span style="left:68%; bottom:-30vh; --drift: 12px; animation-duration: 23s"></span>
+    <span style="left:76%; bottom:-25vh; --drift:-22px; animation-duration: 27s"></span>
+    <span style="left:84%; bottom:-20vh; --drift: 28px; animation-duration: 22s"></span>
+    <span style="left:92%; bottom:-15vh; --drift:-16px; animation-duration: 25s"></span>
+  </div>
+
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="title">
+      <div class="badge"> Plant Vibes</div>
+      <h1 id="title">Welcome back</h1>
+      <p class="subtitle">Log in and let your ideas grow.</p>
+      
+      <form id="loginForm" novalidate>
+        <!-- Role Selection -->
+        <div class="field">
+          <label for="role">Role</label>
+          <div class="input">
+            <select id="role" name="role" required>
+              <option value="">-- Select Role --</option>
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <div class="input">
+            <input id="email" name="email" type="email" placeholder="you@greenmail.com" required aria-required="true" autocomplete="username">
+          </div>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input">
+            <input id="password" name="password" type="password" placeholder="••••••••" required aria-required="true" autocomplete="current-password">
+            <button type="button" class="icon" id="togglePwd" aria-label="Show password">👁</button>
+          </div>
+        </div>
+        <div class="row">
+          <label style="display:flex; align-items:center; gap:8px">
+            <input type="checkbox" id="remember" style="accent-color: var(--leaf)"> Remember me
+          </label>
+          <a href="#" onclick="alert('Pretend password reset '); return false;">Forgot?</a>
+        </div>
+        <button class="btn" type="submit">Sign in</button>
+      </form>
+    </main>
+  </div>
+
+  <!-- Decorative SVG plants -->
+  <div class="scene" aria-hidden="true">
+    <svg class="vine grow" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 300 C 150 260, 300 240, 450 260 S 750 300, 1200 260 L1200 300 Z" fill="#0a241d"/>
+      <path class="stem" d="M1000 300 C 920 270, 870 240, 820 210 C 760 170, 740 130, 720 90 C 690 30, 650 10, 600 20 C 560 28, 540 60, 530 98 C 520 135, 500 160, 470 185 C 420 225, 360 240, 300 230 C 220 215, 180 175, 160 120" stroke="url(#g)" stroke-width="6"/>
+      <g class="leaf" transform="translate(780,200)">
+        <path d="M0 0 C 30 -10, 60 10, 70 40 C 40 38, 15 20, 0 0 Z" fill="url(#leafGrad)"/>
+        <path d="M0 0 C -30 -10, -58 8, -66 36 C -38 34, -14 18, 0 0 Z" fill="url(#leafGradDark)"/>
+      </g>
+      <g class="leaf delay1" transform="translate(640,120) rotate(-8)">
+        <path d="M0 0 C 24 -10, 50 8, 56 34 C 32 32, 12 18, 0 0 Z" fill="url(#leafGrad)"/>
+        <path d="M0 0 C -26 -10, -48 8, -54 30 C -30 28, -10 16, 0 0 Z" fill="url(#leafGradDark)"/>
+      </g>
+      <g class="leaf delay2" transform="translate(520,160) rotate(6)">
+        <path d="M0 0 C 28 -12, 56 10, 64 36 C 38 34, 14 18, 0 0 Z" fill="url(#leafGrad)"/>
+        <path d="M0 0 C -28 -12, -54 10, -60 34 C -34 32, -12 16, 0 0 Z" fill="url(#leafGradDark)"/>
+      </g>
+      <g class="leaf delay3" transform="translate(420,210) rotate(-10)">
+        <path d="M0 0 C 28 -10, 56 10, 64 36 C 38 34, 14 18, 0 0 Z" fill="url(#leafGrad)"/>
+        <path d="M0 0 C -28 -10, -54 10, -60 34 C -34 32, -12 16, 0 0 Z" fill="url(#leafGradDark)"/>
+      </g>
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--leaf)"/>
+          <stop offset="100%" stop-color="var(--leaf-dark)"/>
+        </linearGradient>
+        <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="var(--accent)"/>
+          <stop offset="100%" stop-color="var(--leaf)"/>
+        </linearGradient>
+        <linearGradient id="leafGradDark" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7bd0a1"/>
+          <stop offset="100%" stop-color="var(--leaf-dark)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const togglePwd = document.getElementById('togglePwd');
+    const role = document.getElementById('role');
+
+    togglePwd.addEventListener('click', () => {
+      const show = password.type === 'password';
+      password.type = show ? 'text' : 'password';
+      togglePwd.textContent = show ? '🙈' : '👁';
+      togglePwd.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      if (!role.value) {
+        bump(role);
+        valid = false;
+      }
+      if(!email.value.trim() || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value)){
+        bump(email);
+        valid = false;
+      }
+      if(!password.value.trim() || password.value.length < 6){
+        bump(password);
+        valid = false;
+      }
+
+      if(valid){
+        form.querySelector('.btn').disabled = true;
+        form.querySelector('.btn').textContent = 'Growing...';
+
+        setTimeout(()=>{
+          if (role.value === "student") {
+            window.location.href = "student-dashboard.html";
+          } else if (role.value === "teacher") {
+            window.location.href = "teacher-dashboard.html";
+          } else if (role.value === "admin") {
+            window.location.href = "admin-dashboard.html";
+          }
+        }, 900);
+      }
+    });
+
+    function bump(el){
+      const wrapper = el.closest('.input') || el;
+      wrapper.classList.remove('shake');
+      void wrapper.offsetWidth;
+      wrapper.classList.add('shake');
+      wrapper.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--danger');
+      setTimeout(() => wrapper.style.borderColor = 'rgba(255,255,255,0.14)', 600);
+    }
+  </script>
+</body>
+</html>

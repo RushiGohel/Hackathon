@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - Eco Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0fdf4;
+      --card: #ffffff;
+      --accent: #22c55e;
+      --dark: #064e3b;
+      --danger: #dc2626;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--dark);
+    }
+    header {
+      background: var(--accent);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .container {
+      padding: 2rem;
+      display: grid;
+      gap: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+    /* Points */
+    .points {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+    /* Achievements */
+    .achievements {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .badge {
+      background: #e6f9ec;
+      padding: 0.8rem 1.2rem;
+      border-radius: 1rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    /* Eco-City Showcase */
+    .eco-city {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      grid-gap: 1rem;
+      margin-top: 1rem;
+    }
+    .eco-item {
+      width: 80px;
+      height: 80px;
+      border-radius: 0.5rem;
+      background: #d1fae5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .eco-item:hover {
+      transform: scale(1.2);
+    }
+    /* Change Password */
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #16a34a;
+    }
+    .error {
+      color: var(--danger);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1> Student Profile</h1>
+    <button onclick="logout()">Logout</button>
+  </header>
+
+  <div class="container">
+    <!-- Points -->
+    <div class="card">
+      <h2>My Points </h2>
+      <p class="points" id="points">1200</p>
+    </div>
+
+    <!-- Achievements -->
+    <div class="card">
+      <h2>My Achievements 🎖</h2>
+      <div class="achievements">
+        <div class="badge"> Eco Starter</div>
+        <div class="badge"> Water Saver</div>
+        <div class="badge"> Energy Hero</div>
+        <div class="badge"> Climate Champion</div>
+      </div>
+    </div>
+
+    <!-- Eco-City Showcase -->
+    <div class="card">
+      <h2>Eco-City Showcase </h2>
+      <p>Your city grows with your eco-points!</p>
+      <div class="eco-city" id="ecoCity">
+        <div class="eco-item"></div>
+        <div class="eco-item"></div>
+        <div class="eco-item"></div>
+        <div class="eco-item"></div>
+      </div>
+    </div>
+
+    <!-- Change Password -->
+    <div class="card">
+      <h2>Change Password </h2>
+      <form id="pwdForm">
+        <div>
+          <label for="oldPwd">Old Password</label>
+          <input type="password" id="oldPwd" required>
+        </div>
+        <div>
+          <label for="newPwd">New Password</label>
+          <input type="password" id="newPwd" required>
+        </div>
+        <div>
+          <label for="confirmPwd">Confirm New Password</label>
+          <input type="password" id="confirmPwd" required>
+        </div>
+        <p class="error" id="errorMsg"></p>
+        <button type="submit">Update Password</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Eco-City interaction
+    document.querySelectorAll('.eco-item').forEach(item => {
+      item.addEventListener('click', () => {
+        alert("You clicked on " + item.textContent);
+      });
+    });
+
+    // Change Password Validation
+    document.getElementById('pwdForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const oldPwd = document.getElementById('oldPwd').value.trim();
+      const newPwd = document.getElementById('newPwd').value.trim();
+      const confirmPwd = document.getElementById('confirmPwd').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+
+      if (!oldPwd || !newPwd || !confirmPwd) {
+        errorMsg.textContent = "All fields are required!";
+        return;
+      }
+      if (newPwd.length < 6) {
+        errorMsg.textContent = "New password must be at least 6 characters!";
+        return;
+      }
+      if (newPwd !== confirmPwd) {
+        errorMsg.textContent = "Passwords do not match!";
+        return;
+      }
+      errorMsg.textContent = "";
+      alert(" Password updated successfully! (demo)");
+      this.reset();
+    });
+
+    // Logout
+    function logout() {
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eco City Builder</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to top, #a5d6a7, #e8f5e9);
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #2e7d32;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .sky {
+      position: relative;
+      height: 150px;
+      background: linear-gradient(to bottom, #90caf9, #e3f2fd);
+    }
+
+    .sun {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, #fff176, #fbc02d);
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(255,223,0,0.8);
+    }
+
+    .points-container {
+      text-align: center;
+      padding: 10px;
+    }
+    .points {
+      font-size: 20px;
+      font-weight: bold;
+      color: #1b5e20;
+    }
+
+    .game-container {
+      display: flex;
+      padding: 20px;
+    }
+
+    .shop {
+      width: 260px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+    .shop h2 {
+      text-align: center;
+      margin: 0;
+      color: #2e7d32;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 12px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .item button {
+      background: #43a047;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .item button:hover { background: #2e7d32; }
+
+    .eco-city {
+      flex: 1;
+      margin-left: 20px;
+      position: relative;
+      height: 500px;
+      background: linear-gradient(to top, #4caf50, #81c784);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: inset 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .road {
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: #333;
+    }
+    .road::before {
+      content: "";
+      position: absolute;
+      top: 35px;
+      width: 100%;
+      height: 10px;
+      background: repeating-linear-gradient(
+        to right,
+        #fff 0px,
+        #fff 40px,
+        transparent 40px,
+        transparent 80px
+      );
+    }
+
+    .eco-item {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      animation: pop 0.6s ease-in-out;
+    }
+    @keyframes pop {
+      from { transform: scale(0.3); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* --- SVG Shapes as background --- */
+    .tree {
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"><circle cx="35" cy="25" r="20" fill="green"/><rect x="30" y="30" width="10" height="30" fill="brown"/></svg>') no-repeat center/contain;
+    }
+    .solar {
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"><rect x="10" y="20" width="50" height="30" fill="blue" stroke="black" stroke-width="2"/><rect x="30" y="50" width="10" height="20" fill="gray"/></svg>') no-repeat center/contain;
+    }
+    .bike {
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"><circle cx="20" cy="50" r="10" stroke="black" stroke-width="2" fill="none"/><circle cx="50" cy="50" r="10" stroke="black" stroke-width="2" fill="none"/><line x1="20" y1="50" x2="35" y2="30" stroke="black" stroke-width="2"/><line x1="50" y1="50" x2="35" y2="30" stroke="black" stroke-width="2"/></svg>') no-repeat center/contain;
+    }
+    .house {
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"><rect x="15" y="30" width="40" height="30" fill="lightblue" stroke="black"/><polygon points="15,30 55,30 35,10" fill="brown"/></svg>') no-repeat center/contain;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Eco City Builder — Roads & Houses
+  </header>
+
+  <div class="sky">
+    <div class="sun"></div>
+  </div>
+
+  <div class="points-container">
+    <div class="points">Your Points: <span id="points">400</span></div>
+  </div>
+
+  <div class="game-container">
+    <!-- Shop -->
+    <div class="shop">
+      <h2>Eco Shop</h2>
+      <div class="item"><span>🌳 Tree (100)</span><button onclick="buyItem('tree',100)">Buy</button></div>
+      <div class="item"><span>☀️ Solar Panel (150)</span><button onclick="buyItem('solar',150)">Buy</button></div>
+      <div class="item"><span>🚲 Bike Stand (200)</span><button onclick="buyItem('bike',200)">Buy</button></div>
+      <div class="item"><span>🏠 Eco House (300)</span><button onclick="buyItem('house',300)">Buy</button></div>
+    </div>
+
+    <!-- Eco City -->
+    <div class="eco-city" id="ecoCity">
+      <div class="road"></div>
+    </div>
+  </div>
+
+  <script>
+    let points = 400;
+    const pointsDisplay = document.getElementById("points");
+    const ecoCity = document.getElementById("ecoCity");
+
+    function buyItem(type, cost) {
+      if (points >= cost) {
+        points -= cost;
+        pointsDisplay.textContent = points;
+
+        const newItem = document.createElement("div");
+        newItem.classList.add("eco-item", type);
+
+        // randomize positions above road
+        let x = Math.random() * (ecoCity.clientWidth - 80);
+        let y = Math.random() * (ecoCity.clientHeight - 150);
+        newItem.style.left = x + "px";
+        newItem.style.top = y + "px";
+
+        ecoCity.appendChild(newItem);
+      } else {
+        alert("Not enough points!");
+      }
+    }
+  </script>
+</body>
+</html>

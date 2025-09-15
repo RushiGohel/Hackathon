@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Learn about TribalArt's impact, supporting indigenous artisans and communities." />
+  <title>TribalArt — Our Impact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="2RUSHII.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="1home.html"> 
+        <span class="brand-mark">◉</span>
+        <span class="brand-name">Tribal Tales</span>
+      </a>
+      <nav class="nav">
+        <a href="1home.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="artisans.html">Artisans</a>
+        <a href="map.html">Map</a>
+        <a href="impact.html">Impact</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <div class="controls">
+        <div class="search">
+          <input id="headerSearch" placeholder="Search tribal art..." aria-label="Search products" />
+          <button id="searchBtn" aria-label="Search">🔍</button>
+        </div>
+        <button id="cartBtn" class="cart-btn" aria-label="Open cart">
+          <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">Our Impact</h1>
+        <p class="lead">Supporting indigenous communities and preserving cultural heritage through fair trade</p>
+      </div>
+    </section>
+
+    <section class="container products-section">
+      <div class="section-head">
+        <h2>Making a Difference</h2>
+        <p>Every purchase creates positive change in tribal communities across India</p>
+      </div>
+      
+      <div class="impact-grid">
+        <div class="impact-card clickable-card" onclick="showImpactDetails('artisans')">
+          <div class="impact-icon">👥</div>
+          <h3>500+ Artisans Supported</h3>
+          <p>We work directly with over 500 indigenous artisans across 7 states, providing fair wages and sustainable income opportunities.</p>
+          <div class="card-footer">
+            <span class="click-hint">Click to meet our artisans →</span>
+          </div>
+        </div>
+        
+        <div class="impact-card clickable-card" onclick="showImpactDetails('revenue')">
+          <div class="impact-icon">💰</div>
+          <h3>₹2.5Cr+ Paid to Communities</h3>
+          <p>Over ₹2.5 crores has been paid directly to tribal communities, ensuring fair compensation for their traditional craftsmanship.</p>
+          <div class="card-footer">
+            <span class="click-hint">See the breakdown →</span>
+          </div>
+        </div>
+        
+        <div class="impact-card clickable-card" onclick="showImpactDetails('education')">
+          <div class="impact-icon">🎓</div>
+          <h3>Education Programs</h3>
+          <p>10% of every purchase funds education programs, providing school supplies and scholarships for children in tribal communities.</p>
+          <div class="card-footer">
+            <span class="click-hint">Meet the students →</span>
+          </div>
+        </div>
+        
+        <div class="impact-card clickable-card" onclick="showImpactDetails('sustainability')">
+          <div class="impact-icon">🌱</div>
+          <h3>Sustainable Practices</h3>
+          <p>Promoting eco-friendly materials and traditional techniques that preserve both culture and environment for future generations.</p>
+          <div class="card-footer">
+            <span class="click-hint">Learn more →</span>
+          </div>
+        </div>
+        
+        <div class="impact-card clickable-card" onclick="showImpactDetails('women')">
+          <div class="impact-icon">👩‍🎨</div>
+          <h3>Women Empowerment</h3>
+          <p>70% of our artisans are women, providing them with financial independence and leadership opportunities in their communities.</p>
+          <div class="card-footer">
+            <span class="click-hint">Hear their stories →</span>
+          </div>
+        </div>
+        
+        <div class="impact-card clickable-card" onclick="showImpactDetails('culture')">
+          <div class="impact-icon">🏛️</div>
+          <h3>Cultural Preservation</h3>
+          <p>Supporting the continuation of traditional art forms that have been passed down through generations for centuries.</p>
+          <div class="card-footer">
+            <span class="click-hint">Explore traditions →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container info-grid">
+      <div class="card">
+        <h2>Real People, Real Impact</h2>
+        <div class="story interactive-story" onclick="playVideo('meera')">
+          <div class="story-header">
+            <img src="hero1.jpg" alt="Meera" class="story-image">
+            <div class="story-info">
+              <h4>Meera's Journey - Warli Artist</h4>
+              <span class="story-location">Maharashtra, India</span>
+            </div>
+            <div class="play-button">▶️</div>
+          </div>
+          <p>"TribalArt helped me start my own workshop. Now I employ 15 other women from my village and we've built a school for our children. My daughter is the first in our family to go to college!"</p>
+          <div class="story-stats">
+            <span class="stat">15 women employed</span>
+            <span class="stat">1 school built</span>
+            <span class="stat">3 years with us</span>
+          </div>
+        </div>
+        
+        <div class="story interactive-story" onclick="playVideo('rajesh')">
+          <div class="story-header">
+            <img src="mask.jpg" alt="Rajesh" class="story-image">
+            <div class="story-info">
+              <h4>Rajesh's Metal Craft Revival</h4>
+              <span class="story-location">Chhattisgarh, India</span>
+            </div>
+            <div class="play-button">▶️</div>
+          </div>
+          <p>"Through fair trade, I was able to revive traditional Bastar metalwork techniques that were almost lost. Now my sons are learning the craft too, and we've trained 8 apprentices this year."</p>
+          <div class="story-stats">
+            <span class="stat">8 apprentices trained</span>
+            <span class="stat">2 sons learning</span>
+            <span class="stat">5 years with us</span>
+          </div>
+        </div>
+        
+        <div class="story interactive-story" onclick="playVideo('sunita')">
+          <div class="story-header">
+            <img src="neck.jpg" alt="Sunita" class="story-image">
+            <div class="story-info">
+              <h4>Sunita's Jewelry Success</h4>
+              <span class="story-location">Rajasthan, India</span>
+            </div>
+            <div class="play-button">▶️</div>
+          </div>
+          <p>"I started making jewelry to support my family after my husband passed. Now I'm the main breadwinner and my children are getting the education I never had."</p>
+          <div class="story-stats">
+            <span class="stat">Family supported</span>
+            <span class="stat">Children in school</span>
+            <span class="stat">2 years with us</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3>Join Our Mission</h3>
+        <p>Be part of the movement to support indigenous artisans and preserve cultural heritage.</p>
+        
+        <div class="impact-counter">
+          <div class="counter-item">
+            <span class="counter-number" id="artisansCount">0</span>
+            <span class="counter-label">Artisans Supported</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-number" id="communitiesCount">0</span>
+            <span class="counter-label">Communities Helped</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-number" id="childrenCount">0</span>
+            <span class="counter-label">Children Educated</span>
+          </div>
+        </div>
+        
+        <div class="impact-actions">
+          <a href="shop.html" class="btn primary">Shop Now</a>
+          <a href="map.html" class="btn outline">Explore Communities</a>
+        </div>
+        
+        <div class="auth-section">
+          <h4>Join Our Community</h4>
+          <p>Connect with fellow tribal art enthusiasts and artisans.</p>
+          <div class="auth-actions">
+            <a href="login.html" class="btn primary">Log In</a>
+            <a href="signup.html" class="btn outline">Sign Up</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Your Cart</h3>
+      <button id="closeCart" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: ₹<span id="cartTotal">0.00</span></div>
+      <button id="checkout" class="btn primary">Checkout</button>
+      <button id="clearCart" class="btn outline">Clear</button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" aria-live="polite" role="status"></div>
+  
+  <!-- Impact Details Modal -->
+  <div id="impactModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+  
+  <script src="11.js" defer></script>
+  <script>
+    // Impact details data
+    const impactDetails = {
+      artisans: {
+        title: "Meet Our Artisans",
+        content: `
+          <h3>500+ Artisans Across India</h3>
+          <div class="artisan-stats">
+            <div class="stat-item">
+              <strong>Maharashtra:</strong> 120 Warli artists
+            </div>
+            <div class="stat-item">
+              <strong>Madhya Pradesh:</strong> 85 Gond artists
+            </div>
+            <div class="stat-item">
+              <strong>Rajasthan:</strong> 95 jewelry makers
+            </div>
+            <div class="stat-item">
+              <strong>Chhattisgarh:</strong> 80 metal crafters
+            </div>
+            <div class="stat-item">
+              <strong>Odisha:</strong> 60 Saura artists
+            </div>
+            <div class="stat-item">
+              <strong>Gujarat:</strong> 40 pottery makers
+            </div>
+            <div class="stat-item">
+              <strong>Jharkhand:</strong> 20 textile weavers
+            </div>
+          </div>
+          <p>Each artisan receives fair wages, healthcare support, and skill development opportunities.</p>
+        `
+      },
+      revenue: {
+        title: "Revenue Impact",
+        content: `
+          <h3>₹2.5Cr+ Direct Community Investment</h3>
+          <div class="revenue-breakdown">
+            <div class="breakdown-item">
+              <span class="percentage">70%</span>
+              <span class="description">Direct payments to artisans</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="percentage">15%</span>
+              <span class="description">Education programs</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="percentage">10%</span>
+              <span class="description">Healthcare initiatives</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="percentage">5%</span>
+              <span class="description">Infrastructure development</span>
+            </div>
+          </div>
+        `
+      },
+      education: {
+        title: "Education Impact",
+        content: `
+          <h3>Empowering Future Generations</h3>
+          <div class="education-stats">
+            <div class="stat-highlight">
+              <strong>1,200+ children</strong> now have access to quality education
+            </div>
+            <div class="stat-highlight">
+              <strong>15 schools</strong> built or renovated
+            </div>
+            <div class="stat-highlight">
+              <strong>300+ scholarships</strong> provided for higher education
+            </div>
+            <div class="stat-highlight">
+              <strong>50+ teachers</strong> trained in modern teaching methods
+            </div>
+          </div>
+        `
+      },
+      sustainability: {
+        title: "Sustainable Practices",
+        content: `
+          <h3>Protecting Our Planet</h3>
+          <div class="sustainability-list">
+            <div class="practice-item">🌱 100% natural materials used</div>
+            <div class="practice-item">♻️ Zero-waste production processes</div>
+            <div class="practice-item">🌿 Traditional techniques preserved</div>
+            <div class="practice-item">💧 Water conservation methods</div>
+            <div class="practice-item">🌍 Carbon-neutral shipping</div>
+          </div>
+        `
+      },
+      women: {
+        title: "Women Empowerment",
+        content: `
+          <h3>Empowering Women Leaders</h3>
+          <div class="women-stats">
+            <div class="empowerment-item">
+              <strong>70%</strong> of our artisans are women
+            </div>
+            <div class="empowerment-item">
+              <strong>45</strong> women now lead their own workshops
+            </div>
+            <div class="empowerment-item">
+              <strong>200+</strong> women trained in business skills
+            </div>
+            <div class="empowerment-item">
+              <strong>85%</strong> of women artisans are primary breadwinners
+            </div>
+          </div>
+        `
+      },
+      culture: {
+        title: "Cultural Preservation",
+        content: `
+          <h3>Keeping Traditions Alive</h3>
+          <div class="culture-preservation">
+            <div class="tradition-item">
+              <strong>7 art forms</strong> documented and preserved
+            </div>
+            <div class="tradition-item">
+              <strong>150+ techniques</strong> passed to next generation
+            </div>
+            <div class="tradition-item">
+              <strong>25 cultural centers</strong> established
+            </div>
+            <div class="tradition-item">
+              <strong>500+ apprentices</strong> learning traditional crafts
+            </div>
+          </div>
+        `
+      }
+    };
+
+    // Show impact details modal
+    function showImpactDetails(type) {
+      const modal = document.getElementById('impactModal');
+      const content = document.getElementById('modalContent');
+      const data = impactDetails[type];
+      
+      content.innerHTML = `
+        <h2>${data.title}</h2>
+        ${data.content}
+      `;
+      modal.style.display = 'block';
+    }
+
+    // Close modal
+    function closeModal() {
+      document.getElementById('impactModal').style.display = 'none';
+    }
+
+    // Play video (placeholder)
+    function playVideo(artisan) {
+      showToast(`Playing ${artisan}'s story video...`);
+    }
+
+    // Animated counters
+    function animateCounters() {
+      const counters = [
+        { id: 'artisansCount', target: 500, duration: 2000 },
+        { id: 'communitiesCount', target: 25, duration: 1500 },
+        { id: 'childrenCount', target: 1200, duration: 2500 }
+      ];
+
+      counters.forEach(counter => {
+        const element = document.getElementById(counter.id);
+        const increment = counter.target / (counter.duration / 16);
+        let current = 0;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= counter.target) {
+            current = counter.target;
+            clearInterval(timer);
+          }
+          element.textContent = Math.floor(current).toLocaleString();
+        }, 16);
+      });
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate counters when page loads
+      setTimeout(animateCounters, 1000);
+      
+      // Add click animations to cards
+      document.querySelectorAll('.clickable-card').forEach(card => {
+        card.addEventListener('click', function() {
+          this.style.transform = 'scale(0.98)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 150);
+        });
+      });
+    });
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('impactModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>

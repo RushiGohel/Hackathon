@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tribal Art Map</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Google Fonts for a tribal-inspired font -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #f4e1d2 0%, #d9a66b 100%); /* Earthy ochre gradient */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Tribal pattern background overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="none" stroke="%23a0522d" stroke-width="2" d="M10 10L90 90M90 10L10 90M50 10V90M10 50H90" opacity="0.1"/></svg>') repeat;
+      z-index: -1;
+      opacity: 0.2;
+    }
+
+    header {
+      width: 100%;
+      background: linear-gradient(90deg, #8b4513, #cd853f); /* Tribal-inspired brown and ochre */
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-family: 'Amatic SC', cursive;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-bottom: 4px solid #fff5ee; /* Cream accent */
+    }
+
+    .location-selector {
+      margin: 30px 0;
+      width: 90%;
+      max-width: 500px;
+      background: #fff5ee; /* Cream background for tribal feel */
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border: 2px solid #8b4513; /* Tribal brown border */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    /* Tribal-inspired corner decoration */
+    .location-selector::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 20px;
+      height: 20px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="5" fill="%238b4513"/><path d="M10 2V18M2 10H18" stroke="%238b4513" stroke-width="2"/></svg>');
+    }
+
+    .location-selector:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .location-selector label {
+      margin-bottom: 10px;
+      font-family: 'Amatic SC', cursive;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #8b4513; /* Saddle brown */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 2px solid #cd853f; /* Ochre border */
+      font-size: 1rem;
+      background-color: #fffaf0; /* Floral white */
+      color: #2c3e50;
+      cursor: pointer;
+      transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #8b4513;
+      background-color: #fff;
+    }
+
+    select:hover {
+      background-color: #f4e1d2;
+      transform: scale(1.02);
+    }
+
+    #map {
+      width: 90%;
+      max-width: 1100px;
+      height: 600px;
+      border-radius: 20px;
+      border: 4px solid #8b4513; /* Tribal brown border */
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+      margin-bottom: 40px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Tribal-inspired map overlay */
+    #map::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><path fill="none" stroke="%238b4513" stroke-width="1" d="M10 10L40 40M40 10L10 40" opacity="0.05"/></svg>') repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Custom Leaflet Popup Styling */
+    .leaflet-popup-content-wrapper {
+      border-radius: 10px;
+      background: #fff5ee;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 1px solid #cd853f;
+    }
+
+    .leaflet-popup-content {
+      font-family: 'Poppins', sans-serif;
+      color: #8b4513;
+      font-weight: 500;
+      padding: 5px;
+    }
+
+    .leaflet-popup-tip {
+      background: #fff5ee;
+      border: 1px solid #cd853f;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        font-size: 1.8rem;
+        padding: 15px;
+      }
+
+      .location-selector {
+        width: 95%;
+        padding: 20px;
+      }
+
+      #map {
+        height: 400px;
+        width: 95%;
+      }
+
+      .location-selector label {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 1.4rem;
+      }
+
+      .location-selector {
+        padding: 15px;
+      }
+
+      select {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="1home.html" style="color: #fff; text-decoration: none; margin-right: 20px;">← Back to Home</a>
+  Indian Tribal Art Map
+</header>
+
+<div class="location-selector">
+  <label for="places">Select a Tribal Art Location in India</label>
+  <select id="places">
+    <option value="">--Select a Place--</option>
+  </select>
+</div>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  // Initialize Map (center of India)
+  const map = L.map('map').setView([20.5937, 78.9629], 5);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Indian Tribal Art Places
+  const indianTribalPlaces = [
+    { name: "Warli Art - Maharashtra", coords: [19.967, 72.733] },
+    { name: "Gond Art - Madhya Pradesh", coords: [22.608, 81.756] },
+    { name: "Saura Art - Odisha", coords: [19.171, 83.414] },
+    { name: "Bastar Art - Chhattisgarh", coords: [19.074, 82.008] },
+    { name: "Sohrai & Khovar - Jharkhand", coords: [23.996, 85.369] },
+    { name: "Bhil Art - Rajasthan", coords: [24.585, 73.712] },
+    { name: "Tribal Crafts - Gujarat", coords: [20.773, 73.682] }
+  ];
+
+  const select = document.getElementById('places');
+
+  // Populate dropdown dynamically
+  indianTribalPlaces.forEach((place, index) => {
+    const option = document.createElement('option');
+    option.value = index;
+    option.textContent = place.name;
+    select.appendChild(option);
+  });
+
+  // Add markers
+  const markers = indianTribalPlaces.map(place => {
+    return L.marker(place.coords).addTo(map).bindPopup(`<b>${place.name}</b>`);
+  });
+
+  // Dropdown selection
+  select.addEventListener('change', function() {
+    if (this.value !== "") {
+      const place = indianTribalPlaces[this.value];
+      map.setView(place.coords, 7);
+      markers[this.value].openPopup();
+    }
+  });
+</script>
+
+</body>
+</html>

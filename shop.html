@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Shop authentic tribal art from indigenous artisans. Handmade, fair trade, and woven with stories of resilience." />
+  <title>TribalArt — Shop Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="2RUSHII.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="1home.html"> 
+        <span class="brand-mark">◉</span>
+        <span class="brand-name">Tribal Tales</span>
+      </a>
+      <nav class="nav">
+        <a href="1home.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="artisans.html">Artisans</a>
+        <a href="map.html">Map</a>
+        <a href="impact.html">Impact</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+      <div class="controls">
+        <div class="search">
+          <input id="headerSearch" placeholder="Search tribal art..." aria-label="Search products" />
+          <button id="searchBtn" aria-label="Search">🔍</button>
+        </div>
+        <button id="cartBtn" class="cart-btn" aria-label="Open cart">
+          <span id="cartCount" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">Tribal Art Collection</h1>
+        <p class="lead">Discover authentic handcrafted pieces from indigenous artisans across India</p>
+      </div>
+    </section>
+
+    <section class="container products-section">
+      <div class="section-head">
+        <h2>Our Products</h2>
+        <div class="pills">
+          <button class="pill active" data-category="all">All</button>
+          <button class="pill" data-category="warli">Warli Art</button>
+          <button class="pill" data-category="gond">Gond Art</button>
+          <button class="pill" data-category="jewelry">Jewelry</button>
+          <button class="pill" data-category="textiles">Textiles</button>
+        </div>
+      </div>
+      <div id="productsGrid" class="products-grid">
+        <!-- Products will be loaded here -->
+      </div>
+    </section>
+  </main>
+
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Your Cart</h3>
+      <button id="closeCart" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: ₹<span id="cartTotal">0.00</span></div>
+      <button id="checkout" class="btn primary">Checkout</button>
+      <button id="clearCart" class="btn outline">Clear</button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" aria-live="polite" role="status"></div>
+  <script src="11.js" defer></script>
+  <script>
+    // Product data
+    const products = [
+      {
+        id: 1,
+        name: "Traditional Warli Artwork",
+        category: "warli",
+        price: 1250.00,
+        <img src=".jpg" alt="Weaver at loom" loading="lazy" />
+        description: "Authentic Warli painting depicting village life and nature",
+        artisan: "Meera from Maharashtra"
+      },
+      {
+        id: 2,
+        name: "Tribal Metal Craft",
+        category: "gond",
+        price: 1850.00,
+        image: "C:/HACKATHON/metal craft.webp",
+        description: "Intricate metal craft from Bastar region",
+        artisan: "Rajesh from Chhattisgarh"
+      },
+      {
+        id: 3,
+        name: "Handcrafted Tribal Jewelry",
+        category: "jewelry",
+        price: 850.00,
+        image: "C:/HACKATHON/tribal-jewelry-from-nagaland-1-2110-2929-1_diybaazar62c99a8806a2f.jpg",
+        description: "Beautiful handcrafted jewelry with traditional patterns",
+        artisan: "Sunita from Rajasthan"
+      },
+      {
+        id: 4,
+        name: "Saura Art - Sacred Patterns",
+        category: "warli",
+        price: 1650.00,
+        image: "C:/HACKATHON/saura art.jpg",
+        description: "Sacred Saura art with traditional geometric patterns",
+        artisan: "Lakshmi from Odisha"
+      },
+      {
+        id: 5,
+        name: "Tribal Textile Art",
+        category: "textiles",
+        price: 2250.00,
+        image: "C:/HACKATHON/virgins-mia.webp",
+        description: "Handwoven textile with intricate tribal motifs",
+        artisan: "Kamala from Chhattisgarh"
+      },
+      {
+        id: 6,
+        name: "Bastar Metal Sculpture",
+        category: "gond",
+        price: 1950.00,
+        image: "C:/HACKATHON/Bastar Metal Sculpture.jpg",
+        description: "Traditional metal sculpture from Bastar region",
+        artisan: "Devendra from Chhattisgarh"
+      },
+      {
+        id: 7,
+        name: "Warli Village Scene",
+        category: "warli",
+        price: 1350.00,
+        image: "C:/HACKATHON/81dJygvvDPL.jpg",
+        description: "Detailed Warli painting showing traditional village activities",
+        artisan: "Meera from Maharashtra"
+      },
+      {
+        id: 8,
+        name: "Tribal Metal Ornament",
+        category: "jewelry",
+        price: 750.00,
+        image: "C:/HACKATHON/20250224_150733.webp",
+        description: "Handcrafted metal ornament with tribal designs",
+        artisan: "Priya from Jharkhand"
+      },
+      {
+        id: 9,
+        name: "Traditional Craft Collection",
+        category: "gond",
+        price: 2850.00,
+        image: "C:/HACKATHON/Traditional Craft Collection.jpg",
+        description: "Collection of traditional crafts from various tribal communities",
+        artisan: "Multiple Artisans"
+      },
+      {
+        id: 10,
+        name: "Saura Art - Nature Series",
+        category: "warli",
+        price: 1750.00,
+        image: "C:/HACKATHON/Saura1.webp",
+        description: "Saura art depicting nature and wildlife",
+        artisan: "Lakshmi from Odisha"
+      },
+      {
+        id: 11,
+        name: "Tribal Metal Work",
+        category: "gond",
+        price: 2150.00,
+        image: "C:/HACKATHON/Tribal Metal Work.jpg",
+        description: "Intricate metal work showcasing traditional techniques",
+        artisan: "Rajesh from Chhattisgarh"
+      },
+      {
+        id: 12,
+        name: "Handcrafted Tribal Accessories",
+        category: "jewelry",
+        price: 650.00,
+        image: "C:/HACKATHON/Handcrafted Tribal Accessories.jpg",
+        description: "Beautiful handcrafted accessories with traditional patterns",
+        artisan: "Sunita from Rajasthan"
+      },
+      {
+        id: 13,
+        name: "Handwoven Tribal Basket",
+        category: "textiles",
+        price: 1850.00,
+        image: "C:/HACKATHON/Handwoven Tribal Basket.jpg",
+        description: "Traditional handwoven basket with intricate tribal patterns",
+        artisan: "Kamala from Chhattisgarh"
+      }
+    ];
+
+    // Load products
+    function loadProducts(category = 'all') {
+      const productsGrid = document.getElementById('productsGrid');
+      const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+      
+      productsGrid.innerHTML = filteredProducts.map(product => `
+        <div class="card-prod" data-category="${product.category}">
+          <div class="prod-media">
+            <img src="${product.image}" alt="${product.name}" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="prod-title">${product.name}</h3>
+            <p class="prod-meta">by ${product.artisan}</p>
+            <p class="prod-description">${product.description}</p>
+            <div class="price">₹${product.price.toFixed(2)}</div>
+            <div class="product-actions">
+              <button class="btn primary" onclick="addToCart(${product.id})">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Category filter
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProducts();
+      
+      document.querySelectorAll('.pill').forEach(pill => {
+        pill.addEventListener('click', function() {
+          document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+          loadProducts(this.dataset.category);
+        });
+      });
+    });
+
+    // Cart functionality (simplified)
+    let cart = [];
+    
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      cart.push(product);
+      updateCartDisplay();
+      showToast('${product.name} added to cart!');
+    }
+    
+    function updateCartDisplay() {
+      document.getElementById('cartCount').textContent = cart.length;
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+          <div>
+            <div>${item.name}</div>
+            <div>₹${item.price.toFixed(2)}</div>
+          </div>
+        </div>
+      `).join('');
+      
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      cartTotal.textContent = total.toFixed(2);
+    }
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+</body>
+</html>
